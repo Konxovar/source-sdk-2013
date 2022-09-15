@@ -25,6 +25,8 @@ extern bool g_cl_particle_show_bbox;
 extern int g_cl_particle_show_bbox_cost;
 
 
+bool m_bViewModelEffect;
+
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
@@ -64,6 +66,8 @@ void CNewParticleEffect::Construct()
 	m_MinBounds = Vector( 1.0e6, 1.0e6, 1.0e6 );
 	m_MaxBounds = Vector( -1.0e6, -1.0e6, -1.0e6 );
 	m_pDebugName = NULL;
+
+	m_bViewModelEffect = m_pDef ? m_pDef->IsViewModelEffect() : false;
 
 	if ( IsValid() && clienttools->IsInRecordingMode() )
 	{
@@ -218,7 +222,7 @@ void CNewParticleEffect::SetControlPointEntity( int nWhichPoint, CBaseEntity *pE
 		m_hControlPointOwners[ nWhichPoint ] = pEntity;
 	}
 	else
-		CParticleCollection::SetControlPointObject( nWhichPoint, NULL );
+		CParticleCollection::SetControlPointObject(nWhichPoint, NULL );
 }
 
 
@@ -601,4 +605,3 @@ static void DumpParticleStats_f( void )
 }
 
 static ConCommand cl_dump_particle_stats( "cl_dump_particle_stats", DumpParticleStats_f, "dump particle profiling info to particle_profile.csv") ;
-

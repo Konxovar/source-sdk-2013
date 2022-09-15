@@ -109,6 +109,7 @@ void DrawBeamFollow( const model_t* spritemodel, BeamTrail_t* pHead, int frame, 
 					int flags, float width, float amplitude, float freq, float* color, float flHDRColorScale = 1.0f );
 
 void DrawBeamQuadratic( const Vector &start, const Vector &control, const Vector &end, float width, const Vector &color, float scrollOffset, float flHDRColorScale = 1.0f );
+void DrawBeamFiveratic(const Vector &start, const Vector &start2, const Vector &control, const Vector &end, float width, const Vector &color, float scrollOffset, float flHDRColorScale);
 #endif
 
 //-----------------------------------------------------------------------------

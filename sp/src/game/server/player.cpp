@@ -6150,7 +6150,8 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		GiveAmmo( 16,	"XBowBolt" );
 #ifdef HL2_EPISODIC
 		GiveAmmo( 5,	"Hopwire" );
-#endif		
+#endif
+		GiveNamedItem( "weapon_vortclaw" );
 		GiveNamedItem( "weapon_smg1" );
 		GiveNamedItem( "weapon_frag" );
 		GiveNamedItem( "weapon_crowbar" );

@@ -1524,3 +1524,49 @@ void DrawBeamQuadratic( const Vector &start, const Vector &control, const Vector
 
 	beamDraw.End();
 }
+/*
+P0 = start
+P1 = second start
+P2 = control
+P3 = end
+P(t) = (1-t)^2 * P0 + 2t(1-t)*P1 + t^2 * P2
+*/
+void DrawBeamFiveratic(const Vector &start, const Vector &start2, const Vector &control, const Vector &end, float width, const Vector &color, float scrollOffset, float flHDRColorScale)
+{
+	int subdivisions = 20;
+
+	CMatRenderContextPtr pRenderContext(g_pMaterialSystem);
+	CBeamSegDraw beamDraw;
+	beamDraw.Start(pRenderContext, subdivisions + 1, NULL);
+
+	BeamSeg_t seg;
+	seg.m_flAlpha = 1.0;
+	seg.m_flWidth = width;
+
+	float t = 0;
+	float u = fmod(scrollOffset, 1);
+	float dt = 1.0 / (float)subdivisions;
+	for (int i = 0; i <= subdivisions; i++, t += dt)
+	{
+		float omt = (1 - t);
+		float p0 = omt*omt;
+		float p1 = omt*omt;
+		float p2 = 2 * t*omt;
+		float p3 = t*t;
+
+		seg.m_vPos = p0 * p1 * start + p2 * control + p3 * end;
+		seg.m_flTexCoord = u - t;
+		if (i == 0 || i == subdivisions)
+		{
+			// HACK: fade out the ends a bit
+			seg.m_vColor = vec3_origin;
+		}
+		else
+		{
+			seg.m_vColor = color;
+		}
+		beamDraw.NextSeg(&seg);
+	}
+
+	beamDraw.End();
+}

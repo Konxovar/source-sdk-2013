@@ -28,7 +28,7 @@ ConVar	sk_grubnugget_enabled( "sk_grubnugget_enabled", "1" );
 #define	ANTLIONGRUB_SQUASHED_MODEL		"models/antlion_grub_squashed.mdl"
 
 #define	SF_ANTLIONGRUB_NO_AUTO_PLACEMENT	(1<<0)
-
+#define	SF_ANTLIONGRUB_CANT_SQUISH	(1<<1)
 
 enum GrubState_e
 {
@@ -691,9 +691,13 @@ void CAntlionGrub::Precache( void )
 //-----------------------------------------------------------------------------
 // Purpose: Squish the grub!
 //-----------------------------------------------------------------------------
+
 void CAntlionGrub::InputSquash( inputdata_t &data )
 {
-	Squash( data.pActivator, true, true );
+	if (HasSpawnFlags(SF_ANTLIONGRUB_CANT_SQUISH) == false)
+	{
+		Squash(data.pActivator, true, true);
+	}
 }
 
 //-----------------------------------------------------------------------------

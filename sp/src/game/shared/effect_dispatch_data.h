@@ -56,7 +56,6 @@ public:
 	float	m_flRadius;
 	int		m_nAttachmentIndex;
 	short	m_nSurfaceProp;
-
 	// Some TF2 specific things
 	int		m_nMaterial;
 	int		m_nDamageType;
