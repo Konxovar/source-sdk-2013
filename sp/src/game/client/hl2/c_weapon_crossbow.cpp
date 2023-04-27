@@ -140,6 +140,7 @@ void C_CrossbowBolt::ClientThink( void )
 // Purpose: 
 // Input  : &data - 
 //-----------------------------------------------------------------------------
+/*
 void CrosshairLoadCallback( const CEffectData &data )
 {
 	IClientRenderable *pRenderable = data.GetRenderable( );
@@ -155,5 +156,5 @@ void CrosshairLoadCallback( const CEffectData &data )
 		FX_ElectricSpark( position, 1.0f, 1.0f, NULL );
 	}
 }
-
-DECLARE_CLIENT_EFFECT( "CrossbowLoad", CrosshairLoadCallback );
+*/
+//DECLARE_CLIENT_EFFECT( "CrossbowLoad", CrosshairLoadCallback );

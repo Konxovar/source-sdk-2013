@@ -3418,6 +3418,9 @@
     <ClCompile Include="fx_playerzapeffects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="c_weapon_hivehand.cpp">
+      <Filter>Source Files\HL2 DLL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

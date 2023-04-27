@@ -47,7 +47,7 @@ LINK_ENTITY_TO_CLASS(npc_nihilanth, CNPC_Nihilanth);
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Nihilanth::Classify(void)
 {
-	return	CLASS_PLAYER_ALLY_VITAL;
+	return	CLASS_PLAYER_ALLY;
 }
 
 

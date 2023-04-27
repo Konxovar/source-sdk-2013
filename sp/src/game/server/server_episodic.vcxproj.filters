@@ -1793,6 +1793,9 @@
     <ClInclude Include="npc_bullsquid.h">
       <Filter>Source Files\HL2 DLL</Filter>
     </ClInclude>
+    <ClInclude Include="aliencontroller_energyball.h">
+      <Filter>Source Files\HL2 DLL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gamedll_replay.cpp">
@@ -3523,10 +3526,19 @@
     <ClCompile Include="npc_bullsquid.cpp">
       <Filter>Source Files\HL2 DLL</Filter>
     </ClCompile>
-    <ClCompile Include="npc_nihilanth.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="weapon_vortzap.cpp">
+      <Filter>Source Files\HL2 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_aliencontroller.cpp">
+      <Filter>Source Files\HL2 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_nihilanth.cpp">
+      <Filter>Source Files\HL2 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="aliencontroller_energyball.cpp">
+      <Filter>Source Files\HL2 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="weapon_hivehand.cpp">
       <Filter>Source Files\HL2 DLL</Filter>
     </ClCompile>
   </ItemGroup>

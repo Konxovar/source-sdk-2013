@@ -36,6 +36,8 @@ STUB_WEAPON_CLASS( weapon_crossbow, WeaponCrossbow, C_BaseHLCombatWeapon );
 STUB_WEAPON_CLASS( weapon_slam, Weapon_SLAM, C_BaseHLCombatWeapon );
 STUB_WEAPON_CLASS( weapon_crowbar, WeaponCrowbar, C_BaseHLBludgeonWeapon );
 STUB_WEAPON_CLASS( weapon_vortclaw, WeaponVortclaw, C_BaseHLBludgeonWeapon);
+//neither of these need to be defined outside of the weapon scripts
+//STUB_WEAPON_CLASS(weapon_hivehand, WeaponHivehand, C_BaseHLCombatWeapon);
 //STUB_WEAPON_CLASS(weapon_vortzap, WeaponVortzap, C_BaseHLCombatWeapon);
 
 //#ifdef HL2_EPISODIC

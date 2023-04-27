@@ -180,7 +180,9 @@ void CWeaponVortclaw::HandleAnimEventMeleeHit( animevent_t *pEvent, CBaseCombatC
 	}
 	else
 	{
+		trace_t traceHit;
 		WeaponSound( MELEE_MISS );
+		UTIL_ImpactTrace(&traceHit, DMG_SLASH);
 	}
 }
 

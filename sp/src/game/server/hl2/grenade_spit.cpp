@@ -118,6 +118,22 @@ void CGrenadeSpit::SetSpitSize( int nSize )
 	}
 }
 
+
+void CGrenadeSpit::Precache(void)
+{
+	// m_nSquidSpitSprite = PrecacheModel("sprites/greenglow1.vmt");// client side spittle.
+
+	PrecacheModel("models/spitball_large.mdl");
+	PrecacheModel("models/spitball_medium.mdl");
+	PrecacheModel("models/spitball_small.mdl");
+
+	PrecacheScriptSound("GrenadeSpit.Hit");
+
+	PrecacheParticleSystem("antlion_spit_player");
+	PrecacheParticleSystem("antlion_spit");
+}
+
+
 void CGrenadeSpit::Event_Killed( const CTakeDamageInfo &info )
 {
 	Detonate( );
@@ -269,16 +285,3 @@ void CGrenadeSpit::Think( void )
 	SetNextThink( gpGlobals->curtime + 0.05f );
 }
 
-void CGrenadeSpit::Precache( void )
-{
-	// m_nSquidSpitSprite = PrecacheModel("sprites/greenglow1.vmt");// client side spittle.
-
-	PrecacheModel( "models/spitball_large.mdl" ); 
-	PrecacheModel("models/spitball_medium.mdl"); 
-	PrecacheModel("models/spitball_small.mdl"); 
-
-	PrecacheScriptSound( "GrenadeSpit.Hit" );
-
-	PrecacheParticleSystem( "antlion_spit_player" );
-	PrecacheParticleSystem( "antlion_spit" );
-}
