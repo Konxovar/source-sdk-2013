@@ -55,6 +55,7 @@ $Project "Server (Episodic)"
 			$File	"npc_aliencontroller.cpp"
 			$File	"aliencontroller_energyball.cpp"
 			$File	"weapon_vortzap.cpp"
+			$File	"hl2\weapon_vortclaw.cpp"
 			$File	"weapon_hivehand.cpp"
 		}
 
