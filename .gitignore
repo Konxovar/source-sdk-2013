@@ -58,3 +58,11 @@ config.cfg
 # shader files
 *.tmp
 
+# linux debug files
+*.dbg
+
+# linux srv libs
+*_srv.so
+
+# codelite project files
+*.project

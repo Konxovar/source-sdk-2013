@@ -27,6 +27,12 @@ $Project "Client (Episodic)"
 		$File	"c_team_objectiveresource.cpp"
 		$File	"c_team_objectiveresource.h"
 
+		$Folder	"TVE Mod"
+		{
+			$File	"c_weapon_vortzap.cpp"
+			$File	"c_weapon_hivehand.cpp"
+		}
+
 		$Folder	"HL2 DLL"
 		{
 			$File	"$SRCDIR\game\shared\hl2\basehlcombatweapon_shared.cpp"

@@ -34,7 +34,7 @@
 
 
 
-#include "AI_Senses.h"
+#include "ai_senses.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
