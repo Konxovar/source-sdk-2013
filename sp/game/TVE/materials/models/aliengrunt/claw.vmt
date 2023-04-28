@@ -1,0 +1,16 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "models/aliengrunt/claw"
+	$bumpmap "models/aliengrunt/claw_n"
+
+
+	"$halflambert" "1"
+	$phong 1
+	$phongfresnelranges "[0.35 0.35 1]"
+	$halflambert 1
+	$phongexponent 15
+	$phongboost 0.3
+	$rimlight               1
+	$rimlightexponent       2
+	$rimlightboost          .2
+}

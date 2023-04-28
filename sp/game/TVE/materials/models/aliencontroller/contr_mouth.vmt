@@ -1,0 +1,13 @@
+VertexLitGeneric
+{
+	"$surfaceprop" "default"
+	"$basetexture" "Models/aliencontroller/contr_mouth"
+	"$bumpmap" "Models/aliencontroller/contr_mouth_n"
+	"$phong" "1"
+	"$phongboost" "0.5"
+	"$phongexponent" "30"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges" "[.18 .2 0.2]"
+	"$halflambert" "1"
+	"$nodecal" "1"
+}

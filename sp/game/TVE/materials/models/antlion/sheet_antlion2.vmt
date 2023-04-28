@@ -1,0 +1,18 @@
+VertexLitGeneric
+{
+	$basetexture "models/antlion/sheet_antlion2"	
+	$bumpmap "models/antlion/antlion_normal2"
+	$surfaceprop Alienflesh
+
+
+	$phong 1
+	$phongfresnelranges "[0.6 0.6 0.6]"
+	$phongtint "[0.6 0.3 0.57]"
+	$halflambert 1
+	$phongexponenttexture "models/antlion/antlion_spec2"
+	$phongboost 0.14
+
+	$rimlight               1
+	$rimlightexponent       3
+	$rimlightboost          0.2
+}

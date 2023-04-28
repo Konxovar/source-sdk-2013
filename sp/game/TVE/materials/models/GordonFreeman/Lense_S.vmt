@@ -1,0 +1,22 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/GordonFreeman/health_charger_glass_color"
+	"$bumpmap" "models/GordonFreeman/combine_health_charger_glass_vmat_g_tnormal"
+	
+	"$color2" "0"
+	"$additive" "1"
+	"$nocull" 1
+	
+	"$phong" "1"
+	"$phongexponent" "384"
+	"$phongboost" "20"
+	"$phongfresnelranges"	"[.04 .16 1]"
+	"$phongdisablehalflambert" 1
+	"$ambientocclusion" "0"	
+	
+	"$envmap" "models\models/GordonFreeman/Cubemap/painted_silver.hdr"
+	"$normalmapalphaenvmapmask"		"1"
+	"$envmaptint"	"[.09 .09 .1]"
+	"$envmapfresnel"	"0"		
+	
+}

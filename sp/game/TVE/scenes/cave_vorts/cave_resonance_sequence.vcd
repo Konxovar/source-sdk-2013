@@ -1,0 +1,95 @@
+// Choreo version 1
+actor "cave_vort_1"
+{
+  channel "dialogue"
+  {
+    event speak "vortigaunt_cave1_3"
+    {
+      time 19.952900 26.071358
+      param "vortigaunt_cave1_3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event firetrigger "movetopositions"
+    {
+      time 0.044444 5.000000
+      param "1"
+      resumecondition
+    }
+  }
+  faceposermodel "models\vortigaunt_slave.mdl"
+}
+
+actor "cave_vort_2"
+{
+  channel "dialogue"
+  {
+    event speak "vortigaunt_cavechant_1"
+    {
+      time 5.224169 19.995075
+      param "vortigaunt_cavechant_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "vortigaunt_cavechant_2"
+    {
+      time 25.469700 32.965004
+      param "vortigaunt_cavechant_2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event firetrigger "movetopositions"
+    {
+      time 0.000000 5.000000
+      param "2"
+      resumecondition
+    }
+  }
+  faceposermodel "models\vortigaunt_slave.mdl"
+}
+
+actor "cave_vort_3"
+{
+  channel "dialgoue"
+  {
+    event speak "vortigaunt_cavechant_1"
+    {
+      time 5.210556 19.981464
+      param "vortigaunt_cavechant_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "vortigaunt_cavechant_2"
+    {
+      time 25.454548 32.949852
+      param "vortigaunt_cavechant_2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event firetrigger "movetopositions"
+    {
+      time 0.000000 5.000000
+      param "3"
+      resumecondition
+    }
+  }
+  faceposermodel "models\vortigaunt_slave.mdl"
+}
+
+mapname "D:\Program Files (x86)\steamapps\SourceMods\TVE\maps\tve01a.bsp"
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "ExpressionTool" "100"
+  "RampTool" "100"
+  "CChoreoView" "24"
+}
+fps 60
+snap off
+ignorePhonemes off

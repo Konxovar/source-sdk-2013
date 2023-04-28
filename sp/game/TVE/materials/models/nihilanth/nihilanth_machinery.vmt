@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$basetexture "models/nihilanth/nihilanth_machinery"
+	$bumpmap "models/nihilanth/machinery_n"
+	$surfaceprop Metal
+
+	$phong 1
+	$phongfresnelranges "[0.34 0.67 1]"
+	$halflambert 1
+	$phongexponent 13
+	$phongboost 0.71
+}

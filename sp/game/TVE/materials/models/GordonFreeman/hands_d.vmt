@@ -1,0 +1,17 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/GordonFreeman/hands_color"
+	"$bumpmap" "models/GordonFreeman/hands_normal"
+	
+	"$nocull" 1
+//	"$color2" "[1.2 1.02 .94]"
+	"$color2" "[1.14 .97 .91]"
+	
+	"$phong" "1"
+	"$phongexponenttexture" "models/GordonFreeman/hands_exp"
+	"$phongboost" "14"
+	"$phongfresnelranges"	"[.04 .16 1]"
+	"$ambientocclusion" ".8"	
+	"$phongdisablehalflambert" "1"	
+
+}

@@ -1,0 +1,7 @@
+"Sprite"
+{
+"$basetexture" "sprites/vortzap_player"
+"$spriteorientation" "vp_parallel"
+$spriterendermode 5
+"$translucent" "1"  
+}

@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$basetexture "models/antlion/antlion_eye"
+	$bumpmap "models/antlion/antlion_eye_normal"
+	$surfaceprop Alienflesh
+
+	$phong 1
+	$phongfresnelranges "[0.8 0.9 0.9]"
+	$halflambert 1
+	$phongexponenttexture "models/antlion/antlion_eye_spec"
+	$phongboost 0.34
+}

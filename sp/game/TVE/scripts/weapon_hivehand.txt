@@ -1,0 +1,64 @@
+// hivehand
+
+WeaponData
+{
+	// Weapon data is loaded by both the Game and Client DLLs.
+	"printname"	"#TVE_Hivehand"
+	"viewmodel"				"models/weapons/v_hivehand.mdl"
+	"playermodel"			"models/weapons/v_hivehand.mdl"
+	"anim_prefix"			"hivehand"
+	"bucket"				"4"
+	"bucket_position"		"0"
+	"bucket_360"				"3"
+	"bucket_position_360"		"0"
+
+	"clip_size"				"1"
+	"primary_ammo"			"HornetBullets"
+	"secondary_ammo"		"None"
+	"default_clip"		"10"
+	"weight"				"3"
+	"item_flags"			"0"
+
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+		"single_shot"	"Weapon_Hivehandw.Single"
+		"reload"	"Weapon_Hivehand.Reload"
+		"special1"	"Weapon_Hivehand.BoltElectrify"
+		"special2"	"Weapon_Hivehand.BoltFly"
+
+		// NPC SECTION
+		"single_shot_npc"	"Weapon_Hivehand.Single"
+		"reload_npc"		"Weapon_Hivehand.Reload"
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{		
+
+
+		"weapon"
+		{
+				"font"		"TVEWeaponIcons"
+				"character"	"v"
+		}
+		"ammo"
+		{
+				"font"		"TVEWeaponIcons"
+				"character"	"c"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+			"file"		"sprites/crosshairs"
+			"x"			"0"
+			"y"			"48"
+			"width"		"24"
+			"height"	"24"
+		}
+	}
+}

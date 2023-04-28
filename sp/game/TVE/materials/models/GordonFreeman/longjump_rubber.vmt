@@ -1,0 +1,12 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/Red Menace/HLA/Gordon/Clothes/BM/longjump_diffuse"
+	"$bumpmap" "models/Red Menace/HLA/Gordon/Clothes/BM/longjump_normals"
+	
+	"$nocull" "1"
+	"$phong" "1"
+	"$phongboost" "0.7"
+	"$phongexponent" "15"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges"	"[0.04 0.4 1.5]"
+}

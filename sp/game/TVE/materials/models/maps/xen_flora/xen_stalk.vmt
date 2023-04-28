@@ -1,0 +1,19 @@
+VertexLitGeneric
+{
+	$basetexture "models/maps/xen_flora/xen_stalk"
+	$bumpmap "models/maps/xen_flora/xen_stalk_n"
+
+	$selfillum 1
+	$selfillummask "models/maps/xen_flora/xen_stalk_illum"
+	$detail "models/maps/xen_flora/xen_plant_detail"
+	$detailscale 7.74
+	$detailblendfactor 0.8
+	$detailblendmode 0
+
+	$phong 1
+	$phongfresnelranges "[0.05 0.53 1]"
+	$halflambert 1
+	$phongexponent 31
+	$phongboost 0.5
+
+}

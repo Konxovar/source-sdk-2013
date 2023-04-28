@@ -1,0 +1,26 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/GordonFreeman/\hev_helmet_d"
+	"$bumpmap" "models/GordonFreeman/\hev_helmet_n"
+
+	"$surfaceprop" "glass"
+	"$nocull" "1"
+
+	"$envmap" "models\models/GordonFreeman/Cubemap/fallout4cube_dithered_grey"
+	"$normalmapalphaenvmapmask" "1"
+
+	"$envmaptint" "[0.30 0.28 0.25]"
+//	"$envmaptint" "[0.15 0.15 0.15]"
+	"$envmapsaturation" "0.5"
+	"$envmapcontrast" "1"
+
+	"$color2" ".5"
+	
+	"$phong" "1"
+	"$phongboost" "360"
+	"$phongexponent" "25"
+	"$phongexponenttexture" "models/Red Menace/HLA/Gordon/Clothes/BM/sss_green"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges"	"[0.5 1 2.8]"
+
+}

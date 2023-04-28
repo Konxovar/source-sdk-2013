@@ -1,0 +1,14 @@
+VertexLitGeneric
+{
+	$basetexture "models/maps/rock/cliff/sheet_xen_cliff_1"
+	$bumpmap "models/maps/rock/cliff/sheet_xen_cliff_1_n"
+	$surfaceprop Rock
+
+	$envmap "env_cubemap"
+	$normalmapalphaenvmapmask 1
+	$envmaptint "[0.45 0.45 0.3]"
+	$envmapcontrast 0.8
+	$envmapsaturation 0.5	
+	$envmaplightscale 0.4
+	$envmaplightscaleminmax "[0 1]"
+}

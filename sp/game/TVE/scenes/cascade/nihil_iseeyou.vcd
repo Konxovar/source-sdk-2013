@@ -1,0 +1,49 @@
+// Choreo version 1
+actor "nihilanth"
+{
+  channel "anim"
+  {
+    event sequence "nihil_seevitairn"
+    {
+      time 0.000000 8.625000
+      param "Nihil_SeeVitairn"
+      fixedlength
+    }
+    event lookat "lookatvitairn"
+    {
+      time -0.406667 8.713333
+      param "!player"
+    }
+  }
+  channel "speech"
+  {
+    event speak "nihil_seevitairn"
+    {
+      time 0.026667 8.189955
+      param "nihil_seevitairn"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "triggers"
+  {
+    event firetrigger "fadeout"
+    {
+      time 7.055556 -1.000000
+      param "1"
+    }
+  }
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "ExpressionTool" "100"
+  "RampTool" "100"
+  "CChoreoView" "120"
+}
+fps 60
+snap off
+ignorePhonemes off

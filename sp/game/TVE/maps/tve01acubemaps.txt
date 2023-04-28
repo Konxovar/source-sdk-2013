@@ -1,0 +1,10 @@
+materials/maps/tve01a/c645_697_434.hdr.vtf
+materialsrc\maps\tve01a\c645_697_434.hdr.vtf
+materials/maps/tve01a/c645_697_434.vtf
+materialsrc\maps\tve01a\c645_697_434.vtf
+materials/maps/tve01a/c-692_510_404.hdr.vtf
+materialsrc\maps\tve01a\c-692_510_404.hdr.vtf
+materials/maps/tve01a/c-692_510_404.vtf
+materialsrc\maps\tve01a\c-692_510_404.vtf
+materials/maps/tve01a/cubemapdefault.vtf
+materialsrc\maps\tve01a\cubemapdefault.vtf

@@ -1,0 +1,13 @@
+VertexLitGeneric
+{
+	$basetexture "models/maps/rock/float_rocks_1"
+	$bumpmap "models/maps/rock/float_rocks_n"
+
+	$nocull 1
+	$phong 1
+	$phongexponenttexture "models\maps\rock\canyon_specular"
+	$phongfresnelranges "[0.2 0.5 0.7]"
+	$phongexponent 30
+	$phongboost 0.6
+
+}

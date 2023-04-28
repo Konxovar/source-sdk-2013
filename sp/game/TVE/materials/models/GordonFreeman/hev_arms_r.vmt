@@ -1,0 +1,21 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/GordonFreeman/hev_arms_d"
+	"$bumpmap""models/GordonFreeman/hev_arms_n"
+
+	"$surfaceprop" "plastic"
+	"$nocull" "1"
+
+	"$envmap" "models\models/GordonFreeman/Cubemap/softsilver.hdr"
+	"$normalmapalphaenvmapmask" "1"
+	"$envmaptint" "[.001 .001 .001]"
+
+	"$phong" "1"
+	"$phongboost" "0.7"
+	"$phongexponent" "15"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges"	"[0.04 0.4 1.5]"
+
+
+
+}

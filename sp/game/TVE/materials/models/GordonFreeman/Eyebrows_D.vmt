@@ -1,0 +1,17 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/GordonFreeman/eli_brow_a_trans"
+	"$bumpmap" "models/GordonFreeman/beard_01_rough"
+	
+	"$nocull" 1
+	"$color2" ".7"
+//	"$no_draw" "1"
+	"$translucent" "1"
+	"$phong" "1"
+	"$phongexponent" "8"
+	"$phongboost" "4"
+	"$phongfresnelranges"	"[.04 .16 1]"
+	"$phongdisablehalflambert" 1	
+	"$ambientocclusion" "0"
+	
+}

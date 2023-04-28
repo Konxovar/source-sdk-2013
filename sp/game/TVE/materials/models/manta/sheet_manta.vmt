@@ -1,0 +1,17 @@
+VertexLitGeneric
+{
+	$basetexture "models/manta/sheet_manta"
+	$bumpmap "models/manta/manta_normal"
+	$surfaceprop Alienflesh
+
+	$phong 1
+	$phongfresnelranges "[0.5 0.5 1]"
+	$phongtint "[0.1 0.6 0.9]"
+	$halflambert 1
+	$phongexponenttexture "models/manta/manta_spec"
+	$phongboost 1.45
+
+	$rimlight               1
+	$rimlightexponent       3
+	$rimlightboost          1
+}

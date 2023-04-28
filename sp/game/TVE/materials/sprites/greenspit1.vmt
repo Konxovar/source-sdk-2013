@@ -1,0 +1,7 @@
+"Sprite"
+{
+	"$basetexture" "sprites/VORTRING1"
+	"$color" "[ 1.00 1.00 1.00 ]"
+	"$spriterendermode" 4
+	$translucent 1
+}

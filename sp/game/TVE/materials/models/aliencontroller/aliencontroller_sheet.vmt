@@ -1,0 +1,18 @@
+VertexLitGeneric
+{
+	"$surfaceprop" "default"
+	"$basetexture" "Models/aliencontroller/controller_sheet"
+	"$bumpmap" "Models/aliencontroller/controller_n"
+	"$phong" "1"
+	$phongtint "[0.55 0.35 0.1]"
+	$phongexponenttexture "models/aliencontroller/controller_spec"
+	$phongboost 0.7
+	$phongfresnelranges "[0.3 0.3 0.3]"
+	"$halflambert" "1"
+	"$nodecal" "1"
+
+
+	$rimlight               1
+	$rimlightexponent       3
+	$rimlightboost          1.5
+}

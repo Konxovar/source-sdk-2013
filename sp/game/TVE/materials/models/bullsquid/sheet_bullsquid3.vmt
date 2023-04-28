@@ -1,0 +1,17 @@
+VertexLitGeneric
+{
+	$basetexture "models/bullsquid/sheet_bullsquid3"
+	$bumpmap "models/bullsquid/bullsquid_normal3"
+	$surfaceprop Alienflesh
+
+	$phong 1
+	$phongfresnelranges "[0.5 0.5 1]"
+	$phongtint "[0.86 0.22 0.22 ]"
+	$halflambert 1
+	$phongexponenttexture "models/bullsquid/bullsquid_spec3"
+	$phongboost 0.74
+
+	$rimlight               1
+	$rimlightexponent       3
+	$rimlightboost          1.5
+}

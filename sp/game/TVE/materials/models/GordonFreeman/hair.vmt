@@ -1,0 +1,16 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/GordonFreeman/hair_trans"
+	"$bumpmap" "models/GordonFreeman/eli_eye_lash_normal"
+	
+	"$nocull" 1
+	
+	"$translucent" "1"
+	"$phong" "1"
+	"$phongexponent" "8"
+	"$phongboost" "2"
+	"$phongfresnelranges"	"[.04 .16 1]"
+	"$phongdisablehalflambert" 1	
+	"$ambientocclusion" "0"
+	
+}

@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$basetexture "models/nihilanth/sheet_nihilanth"
+	$bumpmap "models/nihilanth/nihilanth_n"
+	$surfaceprop Alienflesh
+
+	$phong 1
+	$phongfresnelranges "[0.08 0.54 1]"
+	$halflambert 1
+	$phongexponent 25
+	$phongboost 0.44
+}

@@ -1,0 +1,216 @@
+// Choreo version 1
+actor "xonxt"
+{
+  channel "voice"
+  {
+    event speak "xonxt_1"
+    {
+      time 0.523810 25.626667
+      param "xonxt_1.wav"
+      fixedlength
+      tags
+      {
+        "voice" 0.034529
+      }
+      cctype "cc_disabled"
+      cctoken ""
+    }
+  }
+  channel "sync"
+  {
+    event face "Face player"
+    {
+      time -0.916667 -0.416667
+      param "!player"
+      lockbodyfacing
+    }
+  }
+  channel "animations"
+  {
+  }
+  channel "facial expression"
+  {
+    event gesture "then"
+    {
+      time 11.634994 15.934993
+      param "g_palm_both"
+      absolutetags playback_time
+      {
+        "apex" 0.374429
+        "accent" 0.470320
+        "end" 0.803653
+      }
+      absolutetags shifted_time
+      {
+        "apex" 0.439181
+        "accent" 0.506329
+        "end" 0.582278
+      }
+      sequenceduration 5.300000
+    }
+    event lookat "Look at !player"
+    {
+      time 0.487180 29.064102
+      param "!player"
+    }
+    event flexanimation "1"
+    {
+      time 0.666667 2.629713
+      param ""
+      flexanimations samples_use_time defaultcurvetype=curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+      {
+      }
+    }
+  }
+  channel "gestures"
+  {
+    event gesture "g_tdy"
+    {
+      time 5.035093 8.793863
+      param "g_rightfist"
+      absolutetags playback_time
+      {
+        "apex" 0.442708
+        "loop" 0.468750
+        "accent" 0.489583
+        "end" 0.677083
+      }
+      absolutetags shifted_time
+      {
+        "apex" 0.344262
+        "loop" 0.356500
+        "end" 0.365545
+        "accent" 0.579977
+      }
+      sequenceduration 3.766667
+    }
+    event gesture "if"
+    {
+      time 7.577677 12.069230
+      param "g_handclasp"
+      absolutetags playback_time
+      {
+        "in" 0.177938
+        "loop" 0.440335
+        "end" 0.515306
+        "out" 0.931552
+      }
+      absolutetags shifted_time
+      {
+        "in" 0.153061
+        "loop" 0.510204
+        "end" 0.612245
+        "out" 0.816326
+      }
+      sequenceduration 6.633334
+    }
+    event gesture "you"
+    {
+      time 15.461536 20.628204
+      param "g_refer_forward"
+      absolutetags playback_time
+      {
+        "apex" 0.103896
+        "loop" 0.477013
+        "end" 0.487013
+        "accent" 0.584416
+      }
+      absolutetags shifted_time
+      {
+        "apex" 0.103896
+        "loop" 0.487013
+        "end" 0.487013
+        "accent" 0.584416
+      }
+      sequenceduration 5.166667
+    }
+    event gesture "you"
+    {
+      time 21.378586 26.545254
+      param "g_refer_forward"
+      absolutetags playback_time
+      {
+        "apex" 0.103896
+        "loop" 0.477013
+        "end" 0.487013
+        "accent" 0.584416
+      }
+      absolutetags shifted_time
+      {
+        "apex" 0.103896
+        "loop" 0.487013
+        "end" 0.487013
+        "accent" 0.584416
+      }
+      sequenceduration 5.166667
+    }
+    event gesture "g_othr"
+    {
+      time 2.338261 5.961283
+      param "g_present"
+      absolutetags playback_time
+      {
+        "apex" 0.242815
+        "accent" 0.350460
+        "end" 0.698935
+      }
+      absolutetags shifted_time
+      {
+        "apex" 0.247702
+        "accent" 0.392857
+        "end" 0.666667
+      }
+      sequenceduration 5.633333
+    }
+    event gesture "g_hey"
+    {
+      time 0.235294 2.801960
+      param "g_palm_whoa_right"
+      absolutetags playback_time
+      {
+        "apex" 0.282480
+        "accent" 0.468312
+        "end" 0.809160
+      }
+      absolutetags shifted_time
+      {
+        "apex" 0.441176
+        "accent" 0.588235
+        "end" 0.735294
+      }
+      sequenceduration 4.566667
+    }
+    event gesture "g_here"
+    {
+      time 19.671593 23.294615
+      param "g_present"
+      absolutetags playback_time
+      {
+        "apex" 0.328455
+        "end" 0.427820
+        "accent" 0.491892
+      }
+      absolutetags shifted_time
+      {
+        "apex" 0.297619
+        "end" 0.357143
+        "accent" 0.714286
+      }
+      sequenceduration 5.633333
+    }
+  }
+  faceposermodel ".\tve-content\models\vortigaunt_slave.mdl"
+}
+
+mapname "D:\Program Files (x86)\steamapps\SourceMods\TVE\maps\tve01a.bsp"
+scalesettings
+{
+  "GestureTool" "16"
+  "ExpressionTool" "68"
+  "SceneRampTool" "100"
+  "RampTool" "30"
+  "CChoreoView" "34"
+}
+fps 60
+snap off
+ignorePhonemes off

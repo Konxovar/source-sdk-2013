@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\maps\rock\sheet_canyon"
+	"$surfaceprop" "metal"
+
+	$envmap "env_cubemap"
+	$normalmapalphaenvmapmask 1
+	$envmaptint "[0.36 0.36 0.36]"
+	$envmapcontrast 0.73
+	$envmapsaturation 0.51
+	$envmaplightscale 0.55
+	$envmaplightscaleminmax "[0 1]"
+	$envmapanisotropy 1
+	$envmapanisotropyscale 0.49
+}

@@ -1,0 +1,30 @@
+// Choreo version 1
+actor "friendly_vortigaunt"
+{
+  channel "va"
+  {
+    event speak "vort_steadfast"
+    {
+      time 0.080000 4.741814
+      param "vort_steadfast"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "lip_sync"
+  {
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,22 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/GordonFreeman/gordon_suit_color"
+	"$bumpmap" "models/GordonFreeman/gordon_suit_normal"
+	
+	"$color2" ".34"
+	"$translucent" "1"
+	"$nocull" "1"
+	
+	"$phong" "1"
+	"$phongexponenttexture"  "models/GordonFreeman/gordon_suit_exp"
+	"$phongboost" "18"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges"	"[.92 .96 1]"
+	"$phongdisablehalflambert" 1
+	
+	"$envmap" "models\models/GordonFreeman/Cubemap/softsilver.hdr"
+	"$normalmapalphaenvmapmask"		"1"
+	"$envmaptint"	"[.25 .25 .25]"
+	"$envmapfresnel"	"1"	
+
+}

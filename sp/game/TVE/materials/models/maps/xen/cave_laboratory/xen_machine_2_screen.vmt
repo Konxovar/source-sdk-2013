@@ -1,0 +1,14 @@
+VertexLitGeneric
+{
+	$basetexture "models/maps/xen/cave_laboratory/xen_machine_2_screen"
+	$surfaceprop Computer
+
+	$phong 1
+	$phongfresnelranges "[0.09 0.55 1]"
+	$phongtint "[0.64 0.64 0.64]"
+	$halflambert 1
+	$phongexponent 43
+	$phongboost 1.5
+
+	$selfillum 1
+}

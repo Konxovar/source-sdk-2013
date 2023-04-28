@@ -1,0 +1,13 @@
+VertexLitGeneric
+{
+	$basetexture "models\humans\scientists\skin"
+	$bumpmap "models\humans\scientists\skin_n"
+	$surfaceprop Flesh
+
+	$phong 1
+	$phongfresnelranges "[0.05 0.15 0.15 ]"
+	$phongtint "[0.95 0.80 0.68]"
+	$halflambert 1
+	$phongexponent 25
+	$phongboost 0.31
+}

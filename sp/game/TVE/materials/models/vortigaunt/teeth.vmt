@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "models/vortigaunt/teeth"
+
+
+	"$halflambert" "1"
+
+}

@@ -1,0 +1,10 @@
+UnlitGeneric
+{
+	$basetexture "decals/dontforget"
+
+	$translucent 1
+	$decal 1
+
+	$allowalphatocoverage 1
+	$decalscale 1
+}

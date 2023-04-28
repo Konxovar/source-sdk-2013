@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$basetexture "models/bullsquid/bullsquid_eye"
+	$bumpmap "models/bullsquid/eye_n"
+
+	$phong 1
+	$phongfresnelranges "[0.5 0.75 1]"
+	$phongtint "[0.86 0.42 0.1]"
+	$halflambert 1
+	$phongexponenttexture "models/bullsquid/bullsquid_eye_spec"
+	$phongboost 0.74
+}

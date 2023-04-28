@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$basetexture "models\weapons\hivehand\hivehand_sheet"
+	$bumpmap "models\weapons\hivehand\hivehand_n"
+	$surfaceprop Alienflesh
+
+	$phong 1
+	$phongfresnelranges "[0.1 0.17 0.18]"
+	$halflambert 1
+	$phongexponent 109
+	$phongboost 1.22
+}

@@ -1,0 +1,14 @@
+VertexLitGeneric
+{
+	$basetexture "models/maps/xen/xen_bmrf_screen/xen_bmrf_monitor_black"
+	$bumpmap "models/maps/xen/xen_bmrf_screen/xen_bmrf_monitor_n"
+	$surfaceprop Metal
+
+	$phong 1
+	$phongfresnelranges "[0.09 0.55 1]"
+	$phongtint "[0.33 0.34 0.36]"
+	$halflambert 1
+	$phongexponent 7
+	$phongboost 0.74
+	$selfillum 1
+}

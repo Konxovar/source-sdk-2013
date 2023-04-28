@@ -1,0 +1,58 @@
+// Choreo version 1
+actor "distantvort"
+{
+  channel "movements"
+  {
+    event sequence "general animation"
+    {
+      time 0.013333 9.138333
+      param "vortintro_distant"
+      fixedlength
+    }
+    event lookat "Look at !target2"
+    {
+      time 3.100000 6.080000
+      param "!target2"
+    }
+    event lookat "Look at !target1"
+    {
+      time 0.080000 3.060000
+      param "!target1"
+    }
+    event lookat "look at player"
+    {
+      time 6.086668 7.306668
+      param "!player"
+    }
+    event lookat "Look at !target1"
+    {
+      time 7.360000 9.100000
+      param "!target1"
+    }
+  }
+  channel "lipsync"
+  {
+    event speak "intro"
+    {
+      time 0.006667 9.173629
+      param "intro.distant"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  faceposermodel "models\vortigaunt.mdl"
+}
+
+mapname "D:\Program Files (x86)\steamapps\SourceMods\TVE\maps\tve_intro.bsp"
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "ExpressionTool" "100"
+  "RampTool" "100"
+  "CChoreoView" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

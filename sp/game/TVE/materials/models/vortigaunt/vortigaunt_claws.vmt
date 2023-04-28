@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "models/vortigaunt/vortigaunt_claws"
+
+
+	"$halflambert" "1"
+
+}

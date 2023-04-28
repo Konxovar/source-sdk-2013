@@ -1,0 +1,60 @@
+//Adrian: This file contains the credits info for both the Intro and outro.
+"credits.txt"
+{
+
+//========================================================
+//These are the names used in the intro (trainride)
+//========================================================
+"IntroCreditsNames"
+{
+//	"V"	"WeaponIcons"
+	"THROUGH VORTAL EYES"	"ClientTitleFont"
+	"A FAN'MADE HALF'LIFE EXPANSION"	"TVERegular"
+}
+
+"CreditsParams"
+{
+	"logo" "THROUGH VORTAL EYES"
+	
+	"fadeintime"	"2.5"
+	"fadeouttime"	"1"
+	"fadeholdtime"	"2.0"
+	"nextfadetime"	"1.0"
+	"pausebetweenwaves" "1.0"
+	"logotime" "1.0"
+	"posx"	"96"
+	"posy"	"360"
+
+	"color" "255 255 255 128"
+
+//Outro Parameters
+	"scrolltime" "50"
+	"separation"  "10"
+}
+
+//========================================================
+//These are the names used in the outro (breen_01)
+//========================================================
+"OutroCreditsNames"
+{
+	"THROUGH VORTAL EYES"	"CreditsOutroLogos"
+	"Chapter 1 Demonstration"	"CreditsOutroText"
+	" "	"CreditsOutroText"
+	" "	"CreditsOutroLogos"
+	" "	"CreditsOutroText"
+	"Konxovar - Models, Maps, Animations, and Most Things"   "CreditsOutroText"
+	" "	"CreditsOutroText"
+	"Milky - General Support, Conceptual Help"   "CreditsOutroText"
+	" "	"CreditsOutroText"
+	"The Crowbar Collective for A Repurposed and Edited Skybox from BMS (and a ladder)"	"CreditsOutroText"
+	" "	"CreditsOutroText"
+	"Valve and Gabe Newell himself for an amazing set of games, and an amazing set of tools to make our own."	"CreditsOutroText"
+	" "	"CreditsOutroText"
+	"DAVLevels and the POV team for inspiring this project."   "CreditsOutroText"
+	" "	"CreditsOutroText"
+	"And you, for playinh."	"CreditsOutroText"
+}
+
+
+
+}

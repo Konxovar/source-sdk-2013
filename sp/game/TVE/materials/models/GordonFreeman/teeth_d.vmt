@@ -1,0 +1,15 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/GordonFreeman/gman_teeth_color"
+	"$bumpmap" "models/GordonFreeman/gman_teeth_normal"
+	
+	"$nocull" 1
+	
+	"$phong" "1"
+	"$phongexponenttexture" "models/GordonFreeman/gman_teeth_exp"
+	"$phongboost" "14"
+	"$phongfresnelranges"	"[.04 .16 1]"
+	"$phongdisablehalflambert" 1
+	"$ambientocclusion" ".8"	
+
+}

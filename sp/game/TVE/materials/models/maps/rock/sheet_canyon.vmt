@@ -1,0 +1,13 @@
+VertexLitGeneric
+{
+	$basetexture "models/maps/rock/sheet_canyon"
+	$bumpmap "models/maps/rock/canyon_normal"
+
+	$envmap "env_cubemap"
+	$normalmapalphaenvmapmask 1
+	$envmaptint "[0.5 0.7 0.9]"
+	$envmapcontrast 0.6
+	$envmapsaturation 0.9	
+	$envmaplightscale 0.5
+	$envmaplightscaleminmax "[0 1]"
+}

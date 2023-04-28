@@ -1,0 +1,10 @@
+LightmappedGeneric
+{
+	$basetexture "maps/nihilchamber/chamberwall"
+	$bumpmap "maps/nihilchamber/chamberwall_n"
+	$surfaceprop Alienflesh
+
+	$phong 1
+	$phongexponent 48
+	$phongamount "[1.25 1.25 1.25 1]"
+}

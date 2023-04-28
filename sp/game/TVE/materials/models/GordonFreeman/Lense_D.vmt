@@ -1,0 +1,10 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/GordonFreeman/health_charger_glass_color"
+	"$bumpmap" "models/GordonFreeman/combine_health_charger_glass_vmat_g_tnormal"
+	
+	"$nocull" 1
+	"$translucent" "0.2"
+	"$alpha" ".4"
+	
+}

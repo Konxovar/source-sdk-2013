@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+$basetexture "models/GordonFreeman/gordon_eye"
+
+$phong 1
+$phongboost 2
+
+}

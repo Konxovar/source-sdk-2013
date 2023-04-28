@@ -1,0 +1,105 @@
+// Choreo version 1
+actor "vort_leader"
+{
+  channel "va"
+  {
+    event speak "vort_leader_1"
+    {
+      time 0.393333 13.867846
+      param "vort_leader_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event face "lookplayer"
+    {
+      time 0.179488 14.064103
+      param "!player"
+    }
+    event face "lookmyk"
+    {
+      time 14.807694 19.538464
+      param "mykthar"
+    }
+  }
+  faceposermodel "models\vortigaunt_slave.mdl"
+}
+
+actor "mykthar"
+{
+  channel "va"
+  {
+    event firetrigger "trigger1"
+    {
+      time 14.102565 -1.000000
+      param "1"
+      resumecondition
+    }
+    event speak "vort_mykthar_1"
+    {
+      time 14.576924 20.817287
+      param "vort_mykthar_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event face "Face vort_leader"
+    {
+      time 0.384615 13.525640
+      param "vort_leader"
+    }
+    event face "Face player"
+    {
+      time 14.791668 21.161860
+      param "!player"
+    }
+  }
+  faceposermodel "models\vortigaunt_slave.mdl"
+}
+
+actor "benedict"
+{
+  channel "misc"
+  {
+    event sequence "2"
+    {
+      time 5.579363 8.812696
+      param "g_LabWork_chargeUp"
+      fixedlength
+    }
+    event sequence "chant"
+    {
+      time 0.313493 5.480160
+      param "Chant"
+    }
+    event firetrigger "1"
+    {
+      time 5.087302 -1.000000
+      param "5"
+    }
+    event sequence "3"
+    {
+      time 9.119048 9.619048
+      param "Idle01"
+    }
+  }
+  faceposermodel "models\vortigaunt_slave.mdl"
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "ExpressionTool" "100"
+  "RampTool" "100"
+  "CChoreoView" "24"
+}
+fps 60
+snap off
+ignorePhonemes off

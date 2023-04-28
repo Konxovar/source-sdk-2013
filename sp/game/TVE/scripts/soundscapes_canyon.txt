@@ -1,0 +1,71 @@
+
+// Soundscapes for Vortigaunt Sanctuary and Labaratory
+
+// city voice
+
+// pa requests player id
+
+//  CHAR_STREAM			'*'		// as one of 1st 2 chars in name, indicates streaming wav data
+//  CHAR_USERVOX		'?'		// as one of 1st 2 chars in name, indicates user realtime voice data
+//  CHAR_SENTENCE		'!'		// as one of 1st 2 chars in name, indicates sentence wav
+//  CHAR_DRYMIX			'#'		// as one of 1st 2 chars in name, indicates wav bypasses dsp fx
+//  CHAR_DOPPLER		'>'		// as one of 1st 2 chars in name, indicates doppler encoded stereo wav: left wav (incomming) and right wav (outgoing).
+//  CHAR_DIRECTIONAL	'<'		// as one of 1st 2 chars in name, indicates stereo wav has direction cone: mix left wav (front facing) with right wav (rear facing) based on soundfacing direction
+//  CHAR_DISTVARIANT	'^'		// as one of 1st 2 chars in name, indicates distance variant encoded stereo wav (left is close, right is far)
+//  CHAR_OMNI			'@'		// as one of 1st 2 chars in name, indicates non-directional wav (default mono or stereo)
+//  CHAR_SPATIALSTEREO	')'		// as one of 1st 2 chars in name, indicates spatialized stereo wav
+//  CHAR_FAST_PITCH		'}'		// as one of 1st 2 chars in name, forces low quality, non-interpolated pitch shift
+
+
+"tve01a.rain.general"
+{
+	"dsp"	"1"
+	"dsp_spatial" "20"
+	"dsp_volume"  "1.0"
+	
+
+	"playlooping"
+	{
+		"volume"	".55"
+		"pitch"		"92"
+		"channel"	"CHAN_AUTO"
+		"position"	"random"
+		"attenuation"	"1.2"
+		"wave"		"ambient/wind/wasteland_wind.wav"
+	}
+	"playlooping"
+	{
+		"volume"	".65"
+		"pitch"		"92"
+		"channel"	"CHAN_AUTO"
+		"position"	"random"
+		"attenuation"	"1.2"
+		"wave"		"ambient/water/water_flow_loop1.wav.wav"
+	}
+	"playlooping"
+	{
+		"volume"	".35"
+		"pitch"		"92"
+		"channel"	"CHAN_AUTO"
+		"position"	"random"
+		"attenuation"	"1.2"
+		"wave"		"ambient/water/drip_loop1.wav.wav"
+	}
+	"playrandom"
+	{
+		"time"		"6,6,6,6"
+		"volume"	"0.8,0.8,0.8,0.8"
+		"pitch"		"50,50,50,50"
+		"soundlevel"	"SNDLVL_85dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/thunder1.wav"
+			"wave"	"ambient/atmosphere/thunder2.wav"
+			"wave"	"ambient/atmosphere/thunder3.wav"
+			"wave"	"ambient/atmosphere/thunder4.wav"
+		}
+	}
+}
+
+

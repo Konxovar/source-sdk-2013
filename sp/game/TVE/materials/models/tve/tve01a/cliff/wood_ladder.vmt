@@ -1,0 +1,20 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/TVE/tve01a/cliff/ladder"
+	"$bumpmap" "models/TVE/tve01a/cliff/ladder_nm"
+	//"$envmap" "env_cubemap" 
+	"$normalmapalphaenvmapmask" "1"
+"$envmaptint" "[.1 .1 .1]"
+$phong 1
+        $phongexponent 25
+        $phongboost .5
+        $phongtint "[1 1 1]"
+        $halflambert 0
+        $phongfresnelranges "[.4 .8 30]"
+
+// Rim lighting parameters
+	"$rimlight" "1"				// To enable rim lighting (requires phong)
+	"$rimlightexponent" "80"             // Exponent for phong component of rim lighting
+	"$rimlightboost" ".3"	               // Boost for ambient cube component of rim lighting
+    "$model" 1
+}

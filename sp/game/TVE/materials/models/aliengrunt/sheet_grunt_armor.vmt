@@ -1,0 +1,16 @@
+VertexLitGeneric
+{
+	$basetexture "models/aliengrunt/sheet_grunt_armor"
+	$bumpmap "models/aliengrunt/grunt_armor_normal"
+
+	$phong 1
+	$phongfresnelranges "[0.7 0.7 0.7]"
+	$phongtint "[0.25 0.6 0.2]"
+	$halflambert 1
+	$rimlight               1
+	$rimlightexponent       2
+	$rimlightboost          .2
+	$phongexponenttexture "models/aliengrunt/grunt_armor_spec"
+	$phongboost 0.4
+//	$selfillum 0.5
+}

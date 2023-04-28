@@ -1,0 +1,61 @@
+// Choreo version 1
+actor "cave_vort_1"
+{
+  channel "dialogue"
+  {
+    event speak "vortigaunt_cave1_1"
+    {
+      time 0.020000 12.238073
+      param "vortigaunt_cave1_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  faceposermodel "models\vortigaunt_slave.mdl"
+}
+
+actor "cave_vort_2"
+{
+  channel "dialogue"
+  {
+    event speak "vortigaunt_yes"
+    {
+      time 11.647059 13.126107
+      param "vortigaunt_yes"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  faceposermodel "models\vortigaunt_slave.mdl"
+}
+
+actor "cave_vort_3"
+{
+  channel "dialogue"
+  {
+    event speak "vortigaunt_indeed"
+    {
+      time 12.872550 13.865702
+      param "vortigaunt_indeed"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  faceposermodel "models\vortigaunt_slave.mdl"
+}
+
+mapname "D:\Program Files (x86)\steamapps\SourceMods\TVE\maps\tve01a.bsp"
+scalesettings
+{
+  "CChoreoView" "68"
+  "RampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

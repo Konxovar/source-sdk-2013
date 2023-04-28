@@ -1,0 +1,16 @@
+VertexLitGeneric
+{
+	$basetexture "models/maps/xen/cave_machine/crystal"
+	$bumpmap "models/maps/xen/cave_machine/crystal_n"
+	$surfaceprop Glass
+
+	$translucent 1
+
+	$phong 1
+	$phongfresnelranges "[0.5 0.75 1]"
+	$halflambert 1
+	$phongexponent 35
+	$phongboost 1.49
+
+	$selfillum 1
+}

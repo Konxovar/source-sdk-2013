@@ -1,0 +1,7 @@
+Sprite
+{
+	$basetexture "sprites/claw"
+
+	$ignorez 1
+
+}

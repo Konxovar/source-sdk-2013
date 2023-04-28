@@ -1,0 +1,13 @@
+VertexLitGeneric
+{
+	$basetexture "models/maps/xen/cave_machine/conductors"
+	$bumpmap "models/maps/xen/cave_machine/conductors_n"
+	$surfaceprop Metal
+
+	$phong 1
+	$phongfresnelranges "[0.18 0.59 1]"
+	$phongtint "[0.42 0.42 0.42]"
+	$halflambert 1
+	$phongexponent 25
+	$phongboost 0.84
+}

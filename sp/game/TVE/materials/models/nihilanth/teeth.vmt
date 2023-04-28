@@ -1,0 +1,10 @@
+VertexLitGeneric
+{
+	$basetexture "models/bullsquid/teeth"
+
+	$phong 1
+	$phongfresnelranges "[0.37 0.69 1]"
+	$halflambert 1
+	$phongexponent 49
+	$phongboost 1.35
+}

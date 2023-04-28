@@ -1,0 +1,199 @@
+@PointClass base(Weapon) studio("models/weapons/w_crowbar.mdl") = weapon_vortclaw : "Vortigaunt Claws" []
+
+@PointClass base(Weapon) studio("models/weapons/w_pistol.mdl") = weapon_vortzap : "Vortigaunt Shock" []
+
+@NPCClass base(Targetname, Angles, BaseFadeProp, Global) studio("models/antlion_grub.mdl") sphere(fademindist) sphere(fademaxdist) = npc_antlion_grub :
+	"Antlion grub"
+[
+	spawnflags(Flags) = 
+	[
+		1 : "Do not automatically attach to surface" : 0
+		2 : "Do not allow grub to be squashed by player" : 1
+	]
+
+	input Squash( void ) : "Squash the grub!"
+
+	output OnAgitated( void ) : "Fired when the grub is stepped on or damaged."
+	output OnDeath( void ) : "Fired when the grub is killed."
+	output OnDeathByPlayer( void ) : "Fired when the grub is killed (only by the player)."
+]
+
+@NPCClass base(BaseNPC, RappelNPC) studio("models/aliengrunt.mdl") = npc_aliengrunt :
+	"Alien Grunt"
+[
+	//additionalequipment(choices) : "Weapons" : "weapon_hivehand" =
+	//[
+	//	"weapon_hivehand" : "Hivehand"
+	//	"0"  : "Nothing"
+	//]
+
+	//manhacks(Choices) : "Number of Manhacks" : 0 =
+	//[
+	//	0 : "None"
+	//	1 : "1"
+	//	2 : "2"
+	//]
+
+	weapondrawn(Choices) : "Pistol starts drawn" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	spawnflags(Flags) =
+	[
+		131072 : "Simple cops" : 0
+		524288 : "Always stitch" : 0
+		1048576 : "No chatter" : 0
+		2097152 : "Arrest enemies" : 0
+		4194304 : "No far stitching" : 0
+		8388608 : "Prevent manhack toss" : 0
+		16777216: "Allowed to respond to thrown objects" : 0
+		33554432: "Mid-range attacks (halfway between normal + long-range)" : 0
+	]
+	  
+	// Inputs
+	input EnableManhackToss(void) : "Enables manhack toss (which had been disabled by the spawnflag)"
+	input SetPoliceGoal(string) : "Causes the NPC to police the area defined by an ai_goal_police"
+	//input ActivateBaton(void) : "Set the baton to active"
+
+	// Outputs
+	output OnStunnedPlayer(void) : "Fires when the player is hit by a stunstick by this NPC."
+	//output OnCupCopped(void) : "Fires if the player hits me with the cupcop can. ONLY use for x360 achievement."
+]
+
+@NPCClass base(BaseNPC) studio("models/bullsquid.mdl") = npc_bullsquid : "Bullsquid"
+[
+]
+
+@NPCClass base(TalkNPC,Parentname) studio() = npc_nihilanth : "Nihilanth"
+[
+	model(studio) : "World model" : "models/nihilanth.mdl"
+]
+@NPCClass base(BaseNPC) studio("models/aliencontroller.mdl") = npc_aliencontroller : "Alien Controller"
+[
+]
+
+
+@BaseClass base(BaseNPC, RappelNPC) = BaseCombine
+[
+	additionalequipment(choices) : "Weapons" : "weapon_smg1" =
+	[
+		"weapon_ar2" : "AR2"
+		"weapon_shotgun" : "Shotgun"
+		"weapon_smg1" : "SMG1"
+		"weapon_stunstick" : "Stun Stick"
+		"weapon_hivehand" : "Hivehand"
+		"0" : "Nothing"
+	]
+
+	spawnflags(Flags) = 
+	[
+		65536 :  "Start LookOff" : 0
+		131072	: "Don't drop grenades" : 0
+		262144  : "Don't drop ar2 alt fire (elite only) " : 0
+	]
+
+	NumGrenades(choices) : "Number of Grenades" : "5" =
+	[
+		"0" : "None"
+		"1" : "1"
+		"2" : "2"
+		"3" : "3"
+		"4" : "4"
+		"5" : "5"
+		"999999" : "Unlimited"
+	]
+
+	// Inputs
+	input LookOn(void) : "Look normally"	
+	input LookOff(void) : "Don't look for myself, use other squad member's eyes"
+	input StartPatrolling(void) : "Patrol whenever I'm idle or alert."
+	input StopPatrolling(void) : "Stop patrolling when I'm idle or alert."
+	input ThrowGrenadeAtTarget(target_destination) : "Throw a grenade at the specified target."
+]
+
+
+@NPCClass base(BaseCombine) studio("models/Combine_Soldier.mdl") = npc_combine_s : "Combine Soldier"
+[
+	input Assault(string) : "Start an assault. Parameter passed in should be the name of the rally point."
+
+	model(choices) : "Model" : "models/combine_soldier.mdl" : "Regular Soldier" = 
+	[
+		"models/combine_soldier.mdl" : "Regular Soldier"
+		"models/combine_soldier_prisonguard.mdl" : "Nova Prospekt Soldier"
+		"models/combine_super_soldier.mdl" : "Elite Soldier"
+	]
+
+	tacticalvariant(choices) : "Tactical Variant" : "0" =
+	[
+		"0" : "Normal Tactics"
+		"1" : "Pressure the enemy (Keep advancing)"
+		"2" : "Pressure until within 30ft, then normal"
+	]
+	
+	usemarch(choices) : "Walk Easy" : "0" : "When true, will use a variety of more casual walking animations instead of the standard walk. For use in crowds. WARNING: this animation only has a north component. For use under very special circumstances only." =
+	[
+		"0" : "No"
+		"2" : "Yes"
+	]
+]
+
+
+@PointClass base(Parentname, BaseNPC) studio("models/junk/w_traffcone.mdl") = npc_launcher : "Launcher"
+[
+
+	spawnflags(Flags) = 
+	[
+		65536  :  "Check LOS" : 1
+	]
+
+	StartOn(choices) : "Start On" : 0 = 
+	[
+		0: "Off"
+		1: "On"
+	] 
+	MissileModel(studio) : "Missile Model" : "models/Weapons/wscanner_grenade.mdl"
+	LaunchSound(sound) : "Launch Sound" : "npc/waste_scanner/grenade_fire.wav"
+	FlySound(sound) :	"Fly Sound": "ambient/objects/machine2.wav"
+
+	SmokeTrail(choices) : "Smoke Trail" : 1 = 
+	[
+		0: "Off"
+		1: "On"
+		2: "On Homing"
+	] 
+	LaunchSmoke(choices) : "Launch Smoke" : 1 = 
+	[
+		0: "Off"
+		1: "On"
+	] 
+	LaunchDelay(integer) : "Launch Delay" : 8	    : "When ON, how long to wait between each launch"
+	LaunchSpeed(string) : "Launch Speed" : 200   : "Initial launch speed of missile (in up direction)"
+	PathCornerName(target_destination) : "Path Corner Name" : "" : "Name of a path corner.  If set launches a pathfollowing missing, rather than a homing missile"
+	HomingSpeed(string) : "Homing Speed" : 0	    : "Speed to reach when homing"
+	HomingStrength(integer) : "Homing Strength" : 10    : "How strong in homing effect (0-100)"
+	HomingDelay(string) : "Homing Delay" : 0 : "Number of seconds to delay before homing starts"
+	HomingRampUp(string) : "Homing Ramp Up" : "0.5" : "Number of seconds it takes to reach full homing strength after homing delay"
+	HomingDuration(string) : "Homing Duration" : 5     : "Number of seconds the homing effect lasts"
+	HomingRampDown(string) : "Homing Ramp Down" : "1.0" : "Number of seconds it takes homing effect to decay after homing duration"
+	Gravity(string) : "Gravity" : "1.0" : "Scale for effect of gravity. (1.0 = normal gravity)"
+	MinRange(integer) : "Min Range" : 100   : "Minimun distance a target can be to be attacked"
+	MaxRange(integer) : "Max Range" : 2048  : "Maximum distance a target can be to be attacked"
+	SpinMagnitude(string) : "Spin Magnitude" : 0	    : "Strength of spin in missile trajectory"
+	SpinSpeed(string) : "Spin Speed" : 0     : "How fast does the spin rotate through 360"
+	Damage(string) : "Damage" : 50    : "How much damage does each missile do"
+	DamageRadius(string) : "DamageRadius" : 200   : "How far away from impact does the missle do damage"
+
+	// Outputs
+	output OnLaunch(void) : "Fires when missile is launched"
+
+	// Inputs
+	input TurnOn(void) : "Turn on Launcher"
+	input TurnOff(void) : "Turn off Launcher"
+	input LOSCheckOn(void) : "Start checking line of sight before firing"
+	input LOSCheckOff(void) : "Stop checking line of sight before firing"
+	input SetEnemyEntity(string) : "Set entity I should attack. Ignores visibility. (output from other entity only)"
+	input ClearEnemyEntity(void) : "Clear set enemy enemy"
+	input FireOnce(void) : "Fire Once (if have enemy)"
+]

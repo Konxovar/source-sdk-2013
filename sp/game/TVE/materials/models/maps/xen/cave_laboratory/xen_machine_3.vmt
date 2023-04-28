@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$basetexture "models\maps\xen\cave_laboratory\xen_machine_3"
+	$bumpmap "models\maps\xen\cave_laboratory\xen_machine_3_n"
+
+	$phong 1
+	$phongfresnelranges "[0.09 0.55 1]"
+	$phongtint "[0.64 0.64 0.64]"
+	$halflambert 1
+
+	$phongboost 0.88
+}

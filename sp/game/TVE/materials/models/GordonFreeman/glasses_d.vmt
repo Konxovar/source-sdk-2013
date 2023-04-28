@@ -1,0 +1,14 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/GordonFreeman/gordon_test_color"
+	"$bumpmap" "models/GordonFreeman/gordon_test_normal"
+	
+	"$nocull" 1
+	
+	"$phong" "1"
+	"$phongexponenttexture" "models/GordonFreeman/gordon_test_exp"
+	"$phongboost" "20"
+	"$phongfresnelranges"	"[.04 .16 1]"
+	"$phongdisablehalflambert" 1	
+
+}

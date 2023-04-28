@@ -1,0 +1,14 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "models/aliengrunt/grunt_mouth"
+
+
+	"$halflambert" "1"
+	$phong 1
+	$phongfresnelranges "[0.5 0.75 1]"
+	$phongtint "[0.45 0.77 0.26]"
+	$halflambert 1
+	$phongexponent 1
+	$phongboost 10
+
+}

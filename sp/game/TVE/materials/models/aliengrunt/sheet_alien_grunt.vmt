@@ -1,0 +1,16 @@
+VertexLitGeneric
+{
+	$basetexture "models/aliengrunt/sheet_alien_grunt"
+	$bumpmap "models/aliengrunt/alien_grunt_normal"
+	$surfaceprop Alienflesh
+
+	$phong 1
+	$phongfresnelranges "[0.1 0.1 0.1]"
+	$halflambert 1
+	$rimlight               1
+	$rimlightexponent       2
+	$rimlightboost          .2
+	$phongtint "[0.036 0.38 0.3]"
+	$phongexponenttexture "models/aliengrunt/alien_grunt_spec"
+	$phongboost 0.7
+}

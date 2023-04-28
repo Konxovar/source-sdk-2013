@@ -1,0 +1,16 @@
+VertexLitGeneric
+{
+	$basetexture "models/headcrab/sheet_headcrab"
+	$bumpmap "models/headcrab/headcrab_normal"
+
+	$phong 1
+	$phongfresnelranges "[0.3 0.3 0.3]"
+	$phongtint "[0.85 0.52 0.07]"
+	$halflambert 1
+	$phongexponenttexture "models/headcrab/headcrab_spec"
+	$phongboost 0.14
+
+	$rimlight               1
+	$rimlightexponent       3
+	$rimlightboost          0.24
+}

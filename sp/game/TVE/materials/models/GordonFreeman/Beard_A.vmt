@@ -1,0 +1,9 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/GordonFreeman/Hair/gordon_hair_color"
+	"$bumpmap" "models/GordonFreeman/Hair/gordon_hair_normal_beard"
+	
+	"$color2" ".8"
+	"$alphatest" 1
+	"$nocull" 1
+}

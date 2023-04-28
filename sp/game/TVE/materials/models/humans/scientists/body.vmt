@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$basetexture "models/humans/scientists/body"
+	$bumpmap "models/humans/scientists/body_n"
+
+	$phong 1
+	$phongfresnelranges "[0.04 0.52 1]"
+	$phongtint "[0.73 0.73 0.73]"
+	$halflambert 1
+	$phongexponent 5
+	$phongboost 0.84
+}

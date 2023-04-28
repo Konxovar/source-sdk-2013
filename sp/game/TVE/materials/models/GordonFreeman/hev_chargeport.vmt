@@ -1,0 +1,22 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/GordonFreeman/hev_chargeport_d"
+	"$bumpmap" "models/GordonFreeman/hev_chargeport_n"
+
+	"$surfaceprop" "metal"
+	"$nocull" "1"
+
+	"$selfillum" "1"
+	"$selfillumtint" "[1 1 1]"
+
+//	"$envmap" "models\models/GordonFreeman/Cubemap/softsilver.hdr"
+	"$normalmapalphaenvmapmask" "1"
+	"$envmaptint" "[0.10 0.10 0.10]"
+
+	"$phong" "1"
+	"$phongboost" "1.5"
+	"$phongexponent" "18"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges"	"[0.3 1 2.5]"
+
+}

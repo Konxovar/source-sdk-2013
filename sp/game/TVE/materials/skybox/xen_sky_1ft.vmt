@@ -1,0 +1,9 @@
+sky
+
+{
+$basetexture "skybox\Xen_Sky_1_ft"
+$hdrcompressedTexture "skybox\Xen_Sky_1_hdr_ft"
+$nofog 1
+$ignorez 1
+$color "[ 1.2 1.2 1.2 ]"
+}

@@ -1,0 +1,14 @@
+// Choreo version 1
+actor "benedict"
+{
+  channel "misc"
+  {
+    event sequence "3"
+    {
+      time 9.119048 9.619048
+      param "Idle01"
+    }
+  }
+  faceposermodel "models\vortigaunt_slave.mdl"
+}
+

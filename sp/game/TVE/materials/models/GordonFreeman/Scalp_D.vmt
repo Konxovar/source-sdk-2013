@@ -1,0 +1,17 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/GordonFreeman/Hair/gordon_haircap_color"
+	"$bumpmap" "models/GordonFreeman/Hair/gordon_haircap_normal"
+	
+	"$nocull" 1
+	"$translucent" 1
+	"$color2" .92
+	"$ambientocclusion" "0"
+
+	"$phong" "1"
+	"$phongboost" "1.4"
+	"$phongexponent" "8"
+	"$phongtint" "{255 167 133}"
+	"$phongfresnelranges" "[.046 .184 1]"
+	"$phongdisablehalflambert" "1"
+}

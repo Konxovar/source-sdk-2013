@@ -1,0 +1,10 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "models/vortigaunt/vort_eye"
+
+
+	"$AmbientOcclColor" "[0.3 0.3 0.3]"	// Default 0.33, 0.33, 0.33
+
+	"$halflambert" "1"
+
+}

@@ -1,0 +1,17 @@
+VertexLitGeneric
+{
+	$basetexture "models/maps/props/lamppost/sheet_lamppost"
+	$bumpmap "models/maps/props/lamppost/lamppost_n"
+	$surfaceprop Wood
+
+	$phong 1
+	$phongfresnelranges "[0.07 0.24 0.2]"
+	$phongtint "[0.05 0.4 0.9]"
+	$halflambert 1
+	$phongexponenttexture "models/maps/props/lamppost/lamppost_s"
+	$phongboost 1
+
+	$rimlight               1
+	$rimlightexponent       0.1
+	$rimlightboost          2.5
+}

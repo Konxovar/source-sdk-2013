@@ -1,0 +1,26 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "models/Weapons/v_vortclaws/sheet_vortclaw"
+	"$bumpmap" "models/Weapons/v_vortclaws/vortclaw_normal"
+//	"$envmap" "Environment Maps/specular"
+//	"$envmaptint" "[ .64 .64 .64 ]"
+//	"$envmap" "env_cubemap"
+//	"$normalmapalphaenvmapmask" 1
+
+	"$phong" "1"
+	"$phongboost" "0.5"
+	"$phongtint" "[0.25 0.3 0.19]"
+	"$phongexponenttexture" "models/vortigaunt/vortigaunt_spec"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges" "[.18 .2 0.2]"
+	"$halflambert" "1"
+	"$nodecal" "1"
+
+
+
+	// Rim lighting parameters
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "5"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "2"										// Boost for ambient cube component of rim lighting
+
+}
