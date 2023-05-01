@@ -16,6 +16,7 @@
 #include "ai_motor.h"
 #include "ai_navigator.h"
 #include "ai_route.h"
+#include "ai_memory.h"
 #include "activitylist.h"
 #include "gamerules.h"	
 #include "npcevent.h"
@@ -48,57 +49,6 @@ ConVar sk_controller_health("sk_controller_health", "45");
 #define ALIENCONTROLLER_TAKEOFF_SPEED 170
 #define ALIENCONTROLLER_AIRSPEED			220 // FIXME: should be about 440, but I need to add acceleration
 
-
-//
-// Custom schedules.
-//
-enum
-{
-	SCHED_ALIENCONTROLLER_IDLE_FLOAT = LAST_SHARED_SCHEDULE,
-
-	//
-	// Various levels of wanting to get away from something, selected
-	// by current value of m_nMorale.
-	//
-
-	SCHED_ALIENCONTROLLER_FLOAT,
-	SCHED_ALIENCONTROLLER_FLY,
-	SCHED_ALIENCONTROLLER_FLY_FAIL,
-	SCHED_ALIENCONTROLLER_FLYING, //This would be to SCHED_ALIENCONTROLLER_FLOAT what walking would be to standing still.
-
-	SCHED_ALIENCONTROLLER_BARNACLED,
-};
-
-
-//
-// Custom tasks.
-//
-enum
-{
-	TASK_ALIENCONTROLLER_FIND_FLYTO_NODE = LAST_SHARED_TASK,
-	//TASK_CROW_PREPARE_TO_FLY,
-	TASK_ALIENCONTROLLER_TAKEOFF,
-	//TASK_CROW_LAND,
-	TASK_ALIENCONTROLLER_FLOAT,
-	TASK_ALIENCONTROLLER_FLY,
-	TASK_ALIENCONTROLLER_FLY_TO_HINT,
-	TASK_ALIENCONTROLLER_PICK_RANDOM_GOAL,
-	TASK_ALIENCONTROLLER_PICK_EVADE_GOAL,
-
-	TASK_ALIENCONTROLLER_FALL_TO_GROUND,
-
-	TASK_ALIENCONTROLLER_WAIT_FOR_BARNACLE_KILL,
-};
-
-
-//
-// Custom conditions.
-//
-enum
-{
-	COND_ALIENCONTROLLER_ALIENCONTROLLER_FLY,
-	COND_ALIENCONTROLLER_BARNACLED,
-};
 
 enum FlyState_t
 {
@@ -138,6 +88,7 @@ class CNPC_AlienController : public CAI_BaseActor
 public:
 	DECLARE_CLASS(CNPC_AlienController, CAI_BaseActor);
 	DECLARE_DATADESC();
+	DEFINE_CUSTOM_AI;
 
 
 	void	Spawn(void);
@@ -157,7 +108,15 @@ public:
 	virtual void StartTask(const Task_t *pTask);
 	virtual void RunTask(const Task_t *pTask);
 
-	virtual int SelectSchedule(void);
+	void	GatherConditions( void );
+
+	virtual bool	IsCurTaskContinuousMove();
+
+	virtual int		SelectSchedule( void );
+	virtual int		SelectFailSchedule( int failedSchedule, int failedTask, AI_TaskFailureCode_t taskFailCode );
+	int				SelectScheduleAttack();
+
+	virtual int		TranslateSchedule( int scheduleType );
 
 	//sounds
 
@@ -178,7 +137,79 @@ public:
 
 	NPC_STATE SelectIdealState(void);
 
-	DEFINE_CUSTOM_AI;
+	//
+	// Alien Controller schedules.
+	//
+	enum
+	{
+		SCHED_ALIENCONTROLLER_IDLE_FLOAT = BaseClass::NEXT_SCHEDULE,
+
+		//
+		// Various levels of wanting to get away from something, selected
+		// by current value of m_nMorale.
+		//
+
+		SCHED_ALIENCONTROLLER_FLOAT,
+		SCHED_ALIENCONTROLLER_FLY,
+		SCHED_ALIENCONTROLLER_FLY_FAIL,
+		SCHED_ALIENCONTROLLER_FLYING, //This would be to SCHED_ALIENCONTROLLER_FLOAT what walking would be to standing still.
+
+		SCHED_ALIENCONTROLLER_BARNACLED,
+
+		SCHED_ALIENCONTROLLER_COMBAT_FAIL,
+
+		SCHED_ALIENCONTROLLER_RANGE_ATTACK1,
+		SCHED_ALIENCONTROLLER_TAKE_COVER1,
+		SCHED_ALIENCONTROLLER_MOVE_TO_MELEE,
+
+		SCHED_ALIENCONTROLLER_ESTABLISH_LINE_OF_FIRE,
+
+		NEXT_SCHEDULE,
+	};
+
+
+	//
+	// Alien Controller tasks.
+	//
+	enum
+	{
+		TASK_ALIENCONTROLLER_FIND_FLYTO_NODE = BaseClass::NEXT_TASK,
+		//TASK_CROW_PREPARE_TO_FLY,
+		TASK_ALIENCONTROLLER_TAKEOFF,
+		//TASK_CROW_LAND,
+		TASK_ALIENCONTROLLER_FLOAT,
+		TASK_ALIENCONTROLLER_FLY,
+		TASK_ALIENCONTROLLER_FLY_TO_HINT,
+		TASK_ALIENCONTROLLER_PICK_RANDOM_GOAL,
+		TASK_ALIENCONTROLLER_PICK_EVADE_GOAL,
+
+		TASK_ALIENCONTROLLER_FALL_TO_GROUND,
+
+		TASK_ALIENCONTROLLER_WAIT_FOR_BARNACLE_KILL,
+
+		TASK_ALIENCONTROLLER_CHASE_ENEMY_CONTINUOUSLY,
+	};
+
+
+	//=========================================================
+	// Alien Controller Conditions
+	//=========================================================
+	enum
+	{
+		COND_ALIENCONTROLLER_ALIENCONTROLLER_FLY = BaseClass::NEXT_CONDITION,
+		COND_ALIENCONTROLLER_FORCED_FLY,
+		COND_ALIENCONTROLLER_BARNACLED,
+		NEXT_CONDITION,
+	};
+
+private:
+	// Select the combat schedule
+	int SelectCombatSchedule();
+
+	// Chase the enemy, updating the target position as the player moves
+	void StartTaskChaseEnemyContinuously( const Task_t *pTask );
+	void RunTaskChaseEnemyContinuously( const Task_t *pTask );
+
 protected:
 	void SetFlyingState(FlyState_t eState);
 	inline bool IsFlying(void) const { return GetNavType() == NAV_FLY; }
@@ -236,6 +267,139 @@ LINK_ENTITY_TO_CLASS(npc_aliencontroller, CNPC_AlienController);
 Class_T	CNPC_AlienController::Classify(void)
 {
 	return	CLASS_ALIENCONTROLLER;
+}
+
+
+//-----------------------------------------------------------------------------
+// Continuous movement tasks
+//-----------------------------------------------------------------------------
+bool CNPC_AlienController::IsCurTaskContinuousMove()
+{
+	const Task_t* pTask = GetTask();
+	if ( pTask && (pTask->iTask == TASK_ALIENCONTROLLER_CHASE_ENEMY_CONTINUOUSLY) )
+		return true;
+
+	return BaseClass::IsCurTaskContinuousMove();
+}
+
+//-----------------------------------------------------------------------------
+// Chase the enemy, updating the target position as the player moves
+//-----------------------------------------------------------------------------
+void CNPC_AlienController::StartTaskChaseEnemyContinuously( const Task_t *pTask )
+{
+	DevWarning( 1, "StartTaskChaseEnemyContinuously!!\n" );
+	CBaseEntity *pEnemy = GetEnemy();
+	if ( !pEnemy )
+	{
+		TaskFail( FAIL_NO_ENEMY );
+		return;
+	}
+
+	// We're done once we get close enough
+	if ( WorldSpaceCenter().DistToSqr( pEnemy->WorldSpaceCenter() ) <= pTask->flTaskData * pTask->flTaskData )
+	{
+		TaskComplete();
+		return;
+	}
+
+	// TASK_GET_PATH_TO_ENEMY
+	if ( IsUnreachable( pEnemy ) )
+	{
+		TaskFail(FAIL_NO_ROUTE);
+		return;
+	}
+
+	if ( !GetNavigator()->SetGoal( GOALTYPE_ENEMY, AIN_NO_PATH_TASK_FAIL ) )
+	{
+		// no way to get there =( 
+		DevWarning( 1, "GetPathToEnemy failed!!\n" );
+		RememberUnreachable( pEnemy );
+		TaskFail(FAIL_NO_ROUTE);
+		return;
+	}
+
+	// NOTE: This is TaskRunPath here.
+	if ( TranslateActivity( ACT_RUN ) != ACT_INVALID )
+	{
+		GetNavigator()->SetMovementActivity( ACT_RUN );
+	}
+	else
+	{
+		GetNavigator()->SetMovementActivity(ACT_WALK);
+	}
+
+	// Cover is void once I move
+	Forget( bits_MEMORY_INCOVER );
+
+	if (GetNavigator()->GetGoalType() == GOALTYPE_NONE)
+	{
+		TaskComplete();
+		GetNavigator()->ClearGoal();		// Clear residual state
+		return;
+	}
+
+	// No shooting delay when in this mode
+	m_MoveAndShootOverlay.SetInitialDelay( 0.0 );
+
+	if (!GetNavigator()->IsGoalActive())
+	{
+		SetIdealActivity( GetStoppedActivity() );
+	}
+	else
+	{
+		// Check validity of goal type
+		ValidateNavGoal();
+	}
+
+	// set that we're probably going to stop before the goal
+	GetNavigator()->SetArrivalDistance( pTask->flTaskData );
+	m_vSavePosition = GetEnemy()->WorldSpaceCenter();
+}
+
+void CNPC_AlienController::RunTaskChaseEnemyContinuously( const Task_t *pTask )
+{
+	if (!GetNavigator()->IsGoalActive())
+	{
+		SetIdealActivity( GetStoppedActivity() );
+	}
+	else
+	{
+		// Check validity of goal type
+		ValidateNavGoal();
+	}
+
+	CBaseEntity *pEnemy = GetEnemy();
+	if ( !pEnemy )
+	{
+		TaskFail( FAIL_NO_ENEMY );
+		return;
+	}
+
+	// We're done once we get close enough
+	if ( WorldSpaceCenter().DistToSqr( pEnemy->WorldSpaceCenter() ) <= pTask->flTaskData * pTask->flTaskData )
+	{
+		GetNavigator()->StopMoving();
+		TaskComplete();
+		return;
+	}
+
+	// Recompute path if the enemy has moved too much
+	if ( m_vSavePosition.DistToSqr( pEnemy->WorldSpaceCenter() ) < (pTask->flTaskData * pTask->flTaskData) )
+		return;
+
+	if ( IsUnreachable( pEnemy ) )
+	{
+		TaskFail(FAIL_NO_ROUTE);
+		return;
+	}
+
+	if ( !GetNavigator()->RefindPathToGoal() )
+	{
+		TaskFail(FAIL_NO_ROUTE);
+		return;
+	}
+
+	m_vSavePosition = pEnemy->WorldSpaceCenter();
 }
 
 
@@ -427,6 +591,127 @@ void CNPC_AlienController::ShriekSound(void)
 }
 
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void CNPC_AlienController::GatherConditions( void )
+{	
+	ClearCondition( COND_ALIENCONTROLLER_ALIENCONTROLLER_FLY );
+	ClearCondition( COND_ALIENCONTROLLER_BARNACLED );
+
+	BaseClass::GatherConditions();
+}
+
+//-----------------------------------------------------------------------------
+// Select attack schedules
+//-----------------------------------------------------------------------------
+int CNPC_AlienController::SelectScheduleAttack()
+{
+	// Kick attack?
+	if ( HasCondition( COND_CAN_MELEE_ATTACK1 ) )
+	{
+		DevWarning( 1, "SCHED_MELEE_ATTACK1!!\n" );
+		return SCHED_MELEE_ATTACK1;
+	}
+
+	// If I'm fighting a combine turret (it's been hacked to attack me), I can't really
+	// hurt it with bullets, so become grenade happy.
+	/*if ( GetEnemy() && GetEnemy()->Classify() == CLASS_COMBINE && FClassnameIs(GetEnemy(), "npc_turret_floor") )
+	{
+		
+	}*/
+
+	// Can I shoot?
+	if ( HasCondition(COND_CAN_RANGE_ATTACK1) )
+	{
+		DevWarning( 1, "SCHED_RANGE_ATTACK1!!\n" );
+		return SCHED_RANGE_ATTACK1;
+
+		// Throw a grenade if not allowed to engage with weapon.
+		/*if ( CanGrenadeEnemy() )
+		{
+				return SCHED_RANGE_ATTACK2;
+		}*/
+
+		/*DesireCrouch();
+		return SCHED_TAKE_COVER_FROM_ENEMY;*/
+	}
+
+	if (HasCondition(COND_WEAPON_SIGHT_OCCLUDED))
+	{
+		DevWarning( 1, "COND_WEAPON_SIGHT_OCCLUDED!!\n" );
+		// If they are hiding behind something that we can destroy, start shooting at it.
+		CBaseEntity *pBlocker = GetEnemyOccluder();
+		if ( pBlocker && pBlocker->GetHealth() > 0 )
+		{
+			return SCHED_SHOOT_ENEMY_COVER;
+		}
+	}
+
+	return SCHED_NONE;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+// Input  :
+// Output :
+//-----------------------------------------------------------------------------
+int CNPC_AlienController::TranslateSchedule( int scheduleType ) 
+{
+	switch( scheduleType )
+	{
+	case SCHED_FAIL_ESTABLISH_LINE_OF_FIRE:
+		{
+			if( !IsCrouching() )
+			{
+				if( GetEnemy() && CouldShootIfCrouching( GetEnemy() ) )
+				{
+					Crouch();
+					return SCHED_COMBAT_FACE;
+				}
+			}
+
+			if( HasCondition( COND_SEE_ENEMY ) )
+			{
+				return TranslateSchedule( SCHED_TAKE_COVER_FROM_ENEMY );
+			}
+		}
+		break;
+	case SCHED_ESTABLISH_LINE_OF_FIRE:
+		{
+			// always assume standing
+			// Stand();
+
+			return SCHED_ALIENCONTROLLER_ESTABLISH_LINE_OF_FIRE;
+		}
+		break;
+	/*case SCHED_HIDE_AND_RELOAD:
+		{
+			// stand up, just in case
+			// Stand();
+			// DesireStand();
+			
+			return SCHED_ALIENCONTROLLER_HIDE_AND_RELOAD;
+		}
+		break;*/
+	case SCHED_RANGE_ATTACK1:
+		{
+			// always assume standing
+			//Stand();
+
+			return SCHED_ALIENCONTROLLER_RANGE_ATTACK1;
+		}
+	/*case SCHED_FAIL:
+		{
+			if ( GetEnemy() != NULL )
+			{
+				return SCHED_ALIENCONTROLLER_COMBAT_FAIL;
+			}
+			return SCHED_FAIL;
+		}*/
+	}
+
+	return BaseClass::TranslateSchedule( scheduleType );
+}
 
 
 //-----------------------------------------------------------------------------
@@ -447,6 +732,11 @@ void CNPC_AlienController::HandleAnimEvent(animevent_t *pEvent)
 			Vector vFirePos;
 
 			GetAttachment("FirePoint", vFirePos);
+
+			if(GetEnemy() == NULL) {
+				DevWarning( 1, "ALNCNTRL_AE_SHOOTENERGYBLL empty Enemy!!\n" );
+				return;
+			}
 
 			Vector			vTarget = GetEnemy()->GetAbsOrigin();
 			Vector			vToss;
@@ -522,19 +812,33 @@ void CNPC_AlienController::HandleAnimEvent(animevent_t *pEvent)
 	}
 }
 
-int CNPC_AlienController::RangeAttack1Conditions(float flDot, float flDist)
-{
-	if (flDist > 85 && flDist <= 784 && flDot >= 0.5 && gpGlobals->curtime >= m_flNextFireTime)
-	{
 
-		// not moving, so fire again pretty soon.
-		m_flNextFireTime = gpGlobals->curtime + 1.5;
-		return(COND_CAN_RANGE_ATTACK1);
-	}
-	else
+//=========================================================
+// RangeAttack1Conditions
+//=========================================================
+int CNPC_AlienController::RangeAttack1Conditions ( float flDot, float flDist )
+{
+	if ( flDist < 85)
 	{
-	return(COND_NONE);
+		return COND_TOO_CLOSE_TO_ATTACK;
 	}
+	else if (flDist > 784)
+	{
+		return COND_TOO_FAR_TO_ATTACK;
+	}
+	else if (flDot < 0.5)
+	{
+		return COND_NOT_FACING_ATTACK;
+	}
+
+	if(gpGlobals->curtime < m_flNextFireTime) {
+		// can't attack right now
+		return(COND_NONE);
+	}
+
+	// not moving, so fire again pretty soon.
+	m_flNextFireTime = gpGlobals->curtime + 1.5;
+	return COND_CAN_RANGE_ATTACK1;
 }
 
 bool CNPC_AlienController::OverrideMove(float flInterval)
@@ -892,22 +1196,129 @@ Activity CNPC_AlienController::GetHintActivity(short sHintType, Activity HintsAc
 
 
 //-----------------------------------------------------------------------------
+// Select the combat schedule
+//-----------------------------------------------------------------------------
+int CNPC_AlienController::SelectCombatSchedule()
+{
+	DevWarning( 1, "SelectCombatSchedule!!\n" );
+	// -----------
+	// dead enemy
+	// -----------
+	if ( HasCondition( COND_ENEMY_DEAD ) )
+	{
+		// call base class, all code to handle dead enemies is centralized there.
+		return SCHED_NONE;
+	}
+
+	// -----------
+	// new enemy
+	// -----------
+	if ( HasCondition( COND_NEW_ENEMY ) )
+	{
+		CBaseEntity *pEnemy = GetEnemy();
+		bool bFirstContact = false;
+		float flTimeSinceFirstSeen = gpGlobals->curtime - GetEnemies()->FirstTimeSeen( pEnemy );
+
+		if( flTimeSinceFirstSeen < 3.0f )
+			bFirstContact = true;
+
+		if ( pEnemy )
+		{
+			if ( HasCondition( COND_CAN_RANGE_ATTACK1 ) )
+			{
+				return SCHED_RANGE_ATTACK1;
+			}
+
+			/*if( HasCondition( COND_SEE_ENEMY ) && CanGrenadeEnemy() )
+			{
+				return SCHED_RANGE_ATTACK2;
+			}*/
+			
+			return SCHED_ESTABLISH_LINE_OF_FIRE;
+		}
+	}
+
+	// ---------------------
+	// no ammo
+	// ---------------------
+	/*if ( ( HasCondition ( COND_NO_PRIMARY_AMMO ) || HasCondition ( COND_LOW_PRIMARY_AMMO ) ) && !HasCondition( COND_CAN_MELEE_ATTACK1) )
+	{
+		return SCHED_HIDE_AND_RELOAD;
+	}*/
+
+	// ----------------------
+	// LIGHT DAMAGE
+	// ----------------------
+	if ( HasCondition( COND_LIGHT_DAMAGE ) )
+	{
+		return SCHED_TAKE_COVER_FROM_ENEMY;
+	}
+
+	// If I'm scared of this enemy run away
+	if ( IRelationType( GetEnemy() ) == D_FR )
+	{
+		if (HasCondition( COND_SEE_ENEMY )	|| 
+			HasCondition( COND_SEE_FEAR )	|| 
+			HasCondition( COND_LIGHT_DAMAGE ) || 
+			HasCondition( COND_HEAVY_DAMAGE ))
+		{
+			FearSound();
+			//ClearCommandGoal();
+			return SCHED_RUN_FROM_ENEMY;
+		}
+
+		// If I've seen the enemy recently, cower. Ignore the time for unforgettable enemies.
+		AI_EnemyInfo_t *pMemory = GetEnemies()->Find( GetEnemy() );
+		if ( (pMemory && pMemory->bUnforgettable) || (GetEnemyLastTimeSeen() > (gpGlobals->curtime - 5.0)) )
+		{
+			// If we're facing him, just look ready. Otherwise, face him.
+			if ( FInAimCone( GetEnemy()->EyePosition() ) )
+				return SCHED_COMBAT_STAND;
+
+			return SCHED_FEAR_FACE;
+		}
+	}
+
+	int attackSchedule = SelectScheduleAttack();
+	if ( attackSchedule != SCHED_NONE )
+		return attackSchedule;
+
+	if (HasCondition(COND_ENEMY_OCCLUDED))
+	{
+		// stand up, just in case
+		Stand();
+		DesireStand();
+
+		if( GetEnemy() && !(GetEnemy()->GetFlags() & FL_NOTARGET) )
+		{
+			// Charge in and break the enemy's cover!
+			return SCHED_ESTABLISH_LINE_OF_FIRE;
+		}
+
+		// If I'm a long, long way away, establish a LOF anyway. Once I get there I'll
+		// start respecting the squad slots again.
+		float flDistSq = GetEnemy()->WorldSpaceCenter().DistToSqr( WorldSpaceCenter() );
+		if ( flDistSq > Square(3000) )
+			return SCHED_ESTABLISH_LINE_OF_FIRE;
+
+		// Otherwise tuck in.
+		//Remember( bits_MEMORY_INCOVER );
+		//return SCHED_ALIENCONTROLLER_WAIT_IN_COVER;
+	}
+
+	return SCHED_NONE;
+}
+
+//-----------------------------------------------------------------------------
 // Purpose: Returns the best new schedule for this NPC based on current conditions.
 //-----------------------------------------------------------------------------
 int CNPC_AlienController::SelectSchedule(void)
 {
 	if (HasCondition(COND_ALIENCONTROLLER_BARNACLED))
 	{
+		DevWarning( 1, "SCHED_ALIENCONTROLLER_BARNACLED!!\n" );
 		// Caught by a barnacle!
 		return SCHED_ALIENCONTROLLER_BARNACLED;
-	}
-
-	//
-	// If we're flying, just find somewhere to fly to.
-	//
-	if (IsFlying())
-	{
-		return SCHED_ALIENCONTROLLER_IDLE_FLOAT;
 	}
 
 	/*
@@ -924,34 +1335,69 @@ int CNPC_AlienController::SelectSchedule(void)
 	switch (m_NPCState)
 	{
 	case NPC_STATE_IDLE:
+		{
+			//
+			// If we're flying, just find somewhere to fly to.
+			//
+			if (IsFlying())
+			{
+				DevWarning( 1, "SCHED_ALIENCONTROLLER_IDLE_FLOAT!!\n" );
+				return SCHED_ALIENCONTROLLER_IDLE_FLOAT;
+			}
+		}
 	case NPC_STATE_ALERT:
+			DevWarning( 1, "NPC_STATE_ALERT!!\n" );
 	case NPC_STATE_COMBAT:
-	{
-		// dead enemy
-		if (HasCondition(COND_ENEMY_DEAD))
 		{
-			// call base class, all code to handle dead enemies is centralized there.
-			return BaseClass::SelectSchedule();
+			int nSched = SelectCombatSchedule();
+			if ( nSched != SCHED_NONE )
+				return nSched;
 		}
-
-		if (HasCondition(COND_NEW_ENEMY))
+		/*
 		{
+			// dead enemy
+			if (HasCondition(COND_ENEMY_DEAD))
+			{
+				// call base class, all code to handle dead enemies is centralized there.
+				return BaseClass::SelectSchedule();
+			}
 
-			return SCHED_WAKE_ANGRY;
-		}
+			if (HasCondition(COND_NEW_ENEMY))
+			{
 
-		if (HasCondition(COND_CAN_RANGE_ATTACK1))
-		{
-			return SCHED_RANGE_ATTACK1;
-		}
+				return SCHED_WAKE_ANGRY;
+			}
 
-		return SCHED_CHASE_ENEMY; //CHECK IF THIS RUINS ANYTHING
+			if (HasCondition(COND_CAN_RANGE_ATTACK1))
+			{
+				return SCHED_RANGE_ATTACK1;
+			}
 
-		break;
+			return SCHED_CHASE_ENEMY; //CHECK IF THIS RUINS ANYTHING
+
+			break;
+		}*/
 	}
+	
+	DevWarning( 1, "BaseClass::SelectSchedule!!\n" );
+	return BaseClass::SelectSchedule();
 }
 
-	return BaseClass::SelectSchedule();
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+int CNPC_AlienController::SelectFailSchedule( int failedSchedule, int failedTask, AI_TaskFailureCode_t taskFailCode )
+{
+	if( failedSchedule == SCHED_ALIENCONTROLLER_TAKE_COVER1 )
+	{
+		// This eases the effects of an unfortunate bug that usually plagues shotgunners. Since their rate of fire is low,
+		// they spend relatively long periods of time without an attack squad slot. If you corner a shotgunner, usually 
+		// the other memebers of the squad will hog all of the attack slots and pick schedules to move to establish line of
+		// fire. During this time, the shotgunner is prevented from attacking. If he also cannot find cover (the fallback case)
+		// he will stand around like an idiot, right in front of you. Instead of this, we have him run up to you for a melee attack.
+		return SCHED_ALIENCONTROLLER_MOVE_TO_MELEE;
+	}
+
+	return BaseClass::SelectFailSchedule( failedSchedule, failedTask, taskFailCode );
 }
 
 //=========================================================
@@ -994,6 +1440,10 @@ void CNPC_AlienController::StartTask(const Task_t *pTask)
 		//			TaskComplete();
 		//			break;
 		//		}
+	case TASK_ALIENCONTROLLER_CHASE_ENEMY_CONTINUOUSLY:
+		StartTaskChaseEnemyContinuously( pTask );
+		break;
+
 	case TASK_RANGE_ATTACK1:
 	{
 		AutoMovement();
@@ -1296,6 +1746,7 @@ DECLARE_TASK(TASK_ALIENCONTROLLER_PICK_RANDOM_GOAL)
 DECLARE_TASK(TASK_ALIENCONTROLLER_FLOAT)
 DECLARE_TASK(TASK_ALIENCONTROLLER_PICK_EVADE_GOAL)
 DECLARE_TASK(TASK_ALIENCONTROLLER_WAIT_FOR_BARNACLE_KILL)
+DECLARE_TASK( TASK_ALIENCONTROLLER_CHASE_ENEMY_CONTINUOUSLY )
 
 // experiment
 DECLARE_TASK(TASK_ALIENCONTROLLER_FALL_TO_GROUND)
@@ -1310,6 +1761,7 @@ DECLARE_ANIMEVENT(AE_ALIENCONTROLLER_TAKEOFF)
 
 
 DECLARE_CONDITION(COND_ALIENCONTROLLER_BARNACLED)
+DECLARE_CONDITION(COND_ALIENCONTROLLER_FORCED_FLY)
 
 //=========================================================
 DEFINE_SCHEDULE
@@ -1345,7 +1797,8 @@ SCHED_ALIENCONTROLLER_FLOAT,
 "		TASK_STOP_MOVING				0"
 "		TASK_WAIT_PVS					0"
 "		TASK_ALIENCONTROLLER_TAKEOFF				0"
-"		SCHED_ALIENCONTROLLER_FLY					0"
+//"		SCHED_ALIENCONTROLLER_FLY					0"
+ "		TASK_SET_SCHEDULE					SCHEDULE:SCHED_ALIENCONTROLLER_FLY"
 "		"
 "	Interrupts"
 "		COND_ALIENCONTROLLER_FORCED_FLY"
@@ -1367,7 +1820,7 @@ SCHED_ALIENCONTROLLER_FLY,
 "		TASK_SET_FAIL_SCHEDULE			SCHEDULE:SCHED_ALIENCONTROLLER_FLY_FAIL"
 "		TASK_STOP_MOVING				0"
 "		TASK_ALIENCONTROLLER_TAKEOFF				0"
-"		SCHED_ALIENCONTROLLER_FLY					0"
+//"		SCHED_ALIENCONTROLLER_FLY					0"
 "	"
 "	Interrupts"
 "		COND_PROVOKED"
@@ -1403,6 +1856,62 @@ SCHED_ALIENCONTROLLER_BARNACLED,
 "		TASK_ALIENCONTROLLER_WAIT_FOR_BARNACLE_KILL		0"
 
 "	Interrupts"
+)
+
+DEFINE_SCHEDULE
+(
+SCHED_ALIENCONTROLLER_RANGE_ATTACK1,
+
+"	Tasks"
+"		TASK_STOP_MOVING				0"
+"		TASK_FACE_ENEMY					0"
+"		TASK_ANNOUNCE_ATTACK			1"	// 1 = primary attack
+"		TASK_WAIT_RANDOM				0.3"
+"		TASK_RANGE_ATTACK1				0"
+""
+"	Interrupts"
+"		COND_NEW_ENEMY"
+"		COND_ENEMY_DEAD"
+"		COND_HEAVY_DAMAGE"
+"		COND_LIGHT_DAMAGE"
+"		COND_LOW_PRIMARY_AMMO"
+"		COND_NO_PRIMARY_AMMO"
+"		COND_WEAPON_BLOCKED_BY_FRIEND"
+"		COND_TOO_CLOSE_TO_ATTACK"
+"		COND_GIVE_WAY"
+"		COND_HEAR_DANGER"
+"		COND_HEAR_MOVE_AWAY"
+//"		COND_COMBINE_NO_FIRE"
+""
+// Enemy_Occluded				Don't interrupt on this.  Means
+//								comibine will fire where player was after
+//								he has moved for a little while.  Good effect!!
+// WEAPON_SIGHT_OCCLUDED		Don't block on this! Looks better for railings, etc.
+)
+
+DEFINE_SCHEDULE 
+(
+SCHED_ALIENCONTROLLER_ESTABLISH_LINE_OF_FIRE,
+
+"	Tasks "
+"		TASK_SET_FAIL_SCHEDULE			SCHEDULE:SCHED_FAIL_ESTABLISH_LINE_OF_FIRE"
+"		TASK_SET_TOLERANCE_DISTANCE		48"
+"		TASK_GET_PATH_TO_ENEMY_LKP_LOS	0"
+//"		TASK_SPEAK_SENTENCE				1"
+"		TASK_RUN_PATH					0"
+"		TASK_WAIT_FOR_MOVEMENT			0"
+"		TASK_SET_SCHEDULE				SCHEDULE:SCHED_COMBAT_FACE"
+"	"
+"	Interrupts "
+"		COND_NEW_ENEMY"
+"		COND_ENEMY_DEAD"
+//"		COND_CAN_RANGE_ATTACK1"
+//"		COND_CAN_RANGE_ATTACK2"
+"		COND_CAN_MELEE_ATTACK1"
+"		COND_CAN_MELEE_ATTACK2"
+"		COND_HEAR_DANGER"
+"		COND_HEAR_MOVE_AWAY"
+"		COND_HEAVY_DAMAGE"
 )
 
 AI_END_CUSTOM_NPC()

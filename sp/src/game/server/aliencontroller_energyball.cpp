@@ -27,7 +27,7 @@
 ConVar    sk_aliencontroller_energy_ball_dmg("sk_aliencontroller_energy_ball_dmg", "7", FCVAR_NONE, "Total damage done by an individual Energy Ball.");
 ConVar	  sk_aliencontroller_energy_ball_radius("sk_aliencontroller_energy_ball_radius", "40", FCVAR_NONE, "Radius of effect for a Controller's Energy Ball.");
 
-LINK_ENTITY_TO_CLASS(grenade_spit, CEnergyBall);
+LINK_ENTITY_TO_CLASS(aliencontroller_energyball, CEnergyBall);
 
 BEGIN_DATADESC(CEnergyBall)
 
