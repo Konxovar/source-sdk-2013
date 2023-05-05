@@ -234,7 +234,7 @@ private:
 	Vector				m_vLastStoredOrigin;
 	float				m_flLastStuckCheck;
 
-	float m_flNextFireTime;
+	//float m_flNextFireTime;
 
 	Vector				m_vDesiredTarget;
 	Vector				m_vCurrentTarget;
@@ -254,7 +254,7 @@ private:
 
 BEGIN_DATADESC(CNPC_AlienController)
 
-DEFINE_FIELD(m_flNextFireTime, FIELD_TIME),
+//DEFINE_FIELD(m_flNextFireTime, FIELD_TIME),
 
 END_DATADESC()
 
@@ -486,12 +486,14 @@ void CNPC_AlienController::Spawn()
 	m_flFieldOfView = 0.5;// indicates the width of this NPC's forward view cone ( as a dotproduct result )
 	m_NPCState = NPC_STATE_NONE;
 
-	m_flNextFireTime = gpGlobals->curtime;
+	//m_flNextFireTime = gpGlobals->curtime;
 
 	NPCInit();
 
-
 	m_flDistTooFar = 784;
+
+	// rest time betwhen shoots
+	GetShotRegulator()->SetRestInterval( 2.0f, 4.0f );
 }
 
 //-----------------------------------------------------------------------------
@@ -606,6 +608,8 @@ void CNPC_AlienController::GatherConditions( void )
 //-----------------------------------------------------------------------------
 int CNPC_AlienController::SelectScheduleAttack()
 {
+	DevWarning( 1, "SelectScheduleAttack!!\n" );
+
 	// Kick attack?
 	if ( HasCondition( COND_CAN_MELEE_ATTACK1 ) )
 	{
@@ -621,7 +625,7 @@ int CNPC_AlienController::SelectScheduleAttack()
 	}*/
 
 	// Can I shoot?
-	if ( HasCondition(COND_CAN_RANGE_ATTACK1) )
+	if ( HasCondition( COND_SEE_ENEMY ) && HasCondition(COND_CAN_RANGE_ATTACK1) )
 	{
 		DevWarning( 1, "SCHED_RANGE_ATTACK1!!\n" );
 		return SCHED_RANGE_ATTACK1;
@@ -647,6 +651,31 @@ int CNPC_AlienController::SelectScheduleAttack()
 		}
 	}
 
+	if (HasCondition(COND_ENEMY_OCCLUDED))
+	{
+		DevWarning( 1, "COND_ENEMY_OCCLUDED!!\n" );
+
+		// stand up, just in case
+		//Stand();
+		//DesireStand();
+
+		if( GetEnemy() && !(GetEnemy()->GetFlags() & FL_NOTARGET) )
+		{
+			// Charge in and break the enemy's cover!
+			return SCHED_ESTABLISH_LINE_OF_FIRE;
+		}
+
+		// If I'm a long, long way away, establish a LOF anyway. Once I get there I'll
+		// start respecting the squad slots again.
+		/*float flDistSq = GetEnemy()->WorldSpaceCenter().DistToSqr( WorldSpaceCenter() );
+		if ( flDistSq > Square(3000) )
+			return SCHED_ESTABLISH_LINE_OF_FIRE;*/
+
+		// Otherwise tuck in.
+		//Remember( bits_MEMORY_INCOVER );
+		//return SCHED_ALIENCONTROLLER_WAIT_IN_COVER;
+	}
+
 	return SCHED_NONE;
 }
 
@@ -661,10 +690,13 @@ int CNPC_AlienController::TranslateSchedule( int scheduleType )
 	{
 	case SCHED_FAIL_ESTABLISH_LINE_OF_FIRE:
 		{
+			DevWarning( 1, "SCHED_FAIL_ESTABLISH_LINE_OF_FIRE!!\n" );
+
 			if( !IsCrouching() )
 			{
 				if( GetEnemy() && CouldShootIfCrouching( GetEnemy() ) )
 				{
+					DevWarning( 1, "Crouch and SCHED_COMBAT_FACE!!\n" );
 					Crouch();
 					return SCHED_COMBAT_FACE;
 				}
@@ -672,6 +704,7 @@ int CNPC_AlienController::TranslateSchedule( int scheduleType )
 
 			if( HasCondition( COND_SEE_ENEMY ) )
 			{
+				DevWarning( 1, "SCHED_FAIL_ESTABLISH_LINE_OF_FIRE -> SCHED_TAKE_COVER_FROM_ENEMY!!\n" );
 				return TranslateSchedule( SCHED_TAKE_COVER_FROM_ENEMY );
 			}
 		}
@@ -681,6 +714,8 @@ int CNPC_AlienController::TranslateSchedule( int scheduleType )
 			// always assume standing
 			// Stand();
 
+			DevWarning( 1, "SCHED_ESTABLISH_LINE_OF_FIRE -> SCHED_ALIENCONTROLLER_ESTABLISH_LINE_OF_FIRE!!\n" );
+			
 			return SCHED_ALIENCONTROLLER_ESTABLISH_LINE_OF_FIRE;
 		}
 		break;
@@ -720,13 +755,16 @@ int CNPC_AlienController::TranslateSchedule( int scheduleType )
 //-----------------------------------------------------------------------------
 void CNPC_AlienController::HandleAnimEvent(animevent_t *pEvent)
 {
+	DevWarning( 1, "CNPC_AlienController::HandleAnimEvent!!\n" );
 	switch (pEvent->event)
 	{
 	default:
+		DevWarning( 1, "case DEFAULT\n" );
 		BaseClass::HandleAnimEvent(pEvent);
 
 	case ALNCNTRL_AE_SHOOTENERGYBLL:
 	{
+		DevWarning( 1, "case ALNCNTRL_AE_SHOOTENERGYBLL\n" );
 		if (GetSchedule(SCHED_RANGE_ATTACK1))
 		{
 			Vector vFirePos;
@@ -765,8 +803,7 @@ void CNPC_AlienController::HandleAnimEvent(animevent_t *pEvent)
 			AttackSound();
 
 			CPVSFilter filter(vFirePos);
-			te->SpriteSpray(filter, 0.0,
-				&vFirePos, &vToss, m_nCtrlrEnergyBallSprite, 5, 10, 15);
+			te->SpriteSpray(filter, 0.0, &vFirePos, &vToss, m_nCtrlrEnergyBallSprite, 5, 10, 15);
 		}
 	}
 
@@ -775,6 +812,7 @@ void CNPC_AlienController::HandleAnimEvent(animevent_t *pEvent)
 
 	if (pEvent->event == AE_ALIENCONTROLLER_TAKEOFF)
 	{
+		DevWarning( 1, "AE_ALIENCONTROLLER_TAKEOFF\n" );
 		if (GetNavigator()->GetPath()->GetCurWaypoint())
 		{
 			Takeoff(GetNavigator()->GetCurWaypointPos());
@@ -784,6 +822,7 @@ void CNPC_AlienController::HandleAnimEvent(animevent_t *pEvent)
 
 	if (pEvent->event == AE_ALIENCONTROLLER_FLOAT)
 	{
+		DevWarning( 1, "AE_ALIENCONTROLLER_FLOAT\n" );
 		//
 		// Start floating.
 		//
@@ -800,6 +839,7 @@ void CNPC_AlienController::HandleAnimEvent(animevent_t *pEvent)
 
 	if (pEvent->event == AE_ALIENCONTROLLER_FLY)
 	{
+		DevWarning( 1, "AE_ALIENCONTROLLER_FLY\n" );
 		//
 		// Start flying.
 		//
@@ -820,24 +860,29 @@ int CNPC_AlienController::RangeAttack1Conditions ( float flDot, float flDist )
 {
 	if ( flDist < 85)
 	{
+		DevWarning( 1, "RangeAttack1Conditions COND_TOO_CLOSE_TO_ATTACK\n" );
 		return COND_TOO_CLOSE_TO_ATTACK;
 	}
 	else if (flDist > 784)
 	{
+		DevWarning( 1, "RangeAttack1Conditions COND_TOO_FAR_TO_ATTACK\n" );
 		return COND_TOO_FAR_TO_ATTACK;
 	}
 	else if (flDot < 0.5)
 	{
+		DevWarning( 1, "RangeAttack1Conditions COND_NOT_FACING_ATTACK\n" );
 		return COND_NOT_FACING_ATTACK;
 	}
 
-	if(gpGlobals->curtime < m_flNextFireTime) {
+	/*if(gpGlobals->curtime < m_flNextFireTime) {
+		DevWarning( 1, "RangeAttack1Conditions - can't attack right now %f < %f\n", gpGlobals->curtime, m_flNextFireTime );
 		// can't attack right now
 		return(COND_NONE);
 	}
 
 	// not moving, so fire again pretty soon.
-	m_flNextFireTime = gpGlobals->curtime + 1.5;
+	m_flNextFireTime = gpGlobals->curtime + 4.0;*/
+	DevWarning( 1, "RangeAttack1Conditions COND_CAN_RANGE_ATTACK1\n" );
 	return COND_CAN_RANGE_ATTACK1;
 }
 
@@ -1201,41 +1246,15 @@ Activity CNPC_AlienController::GetHintActivity(short sHintType, Activity HintsAc
 int CNPC_AlienController::SelectCombatSchedule()
 {
 	DevWarning( 1, "SelectCombatSchedule!!\n" );
+
 	// -----------
 	// dead enemy
 	// -----------
 	if ( HasCondition( COND_ENEMY_DEAD ) )
 	{
+		DevWarning( 1, "COND_ENEMY_DEAD!!\n" );
 		// call base class, all code to handle dead enemies is centralized there.
 		return SCHED_NONE;
-	}
-
-	// -----------
-	// new enemy
-	// -----------
-	if ( HasCondition( COND_NEW_ENEMY ) )
-	{
-		CBaseEntity *pEnemy = GetEnemy();
-		bool bFirstContact = false;
-		float flTimeSinceFirstSeen = gpGlobals->curtime - GetEnemies()->FirstTimeSeen( pEnemy );
-
-		if( flTimeSinceFirstSeen < 3.0f )
-			bFirstContact = true;
-
-		if ( pEnemy )
-		{
-			if ( HasCondition( COND_CAN_RANGE_ATTACK1 ) )
-			{
-				return SCHED_RANGE_ATTACK1;
-			}
-
-			/*if( HasCondition( COND_SEE_ENEMY ) && CanGrenadeEnemy() )
-			{
-				return SCHED_RANGE_ATTACK2;
-			}*/
-			
-			return SCHED_ESTABLISH_LINE_OF_FIRE;
-		}
 	}
 
 	// ---------------------
@@ -1279,34 +1298,44 @@ int CNPC_AlienController::SelectCombatSchedule()
 		}
 	}
 
-	int attackSchedule = SelectScheduleAttack();
-	if ( attackSchedule != SCHED_NONE )
-		return attackSchedule;
+	return SelectScheduleAttack();
+	//int attackSchedule = SelectScheduleAttack();
+	//if ( attackSchedule != SCHED_NONE )
+	//	return attackSchedule;
 
-	if (HasCondition(COND_ENEMY_OCCLUDED))
+#if 0 // dead code
+	// -----------
+	// new enemy
+	// -----------
+	if ( HasCondition( COND_NEW_ENEMY ) )
 	{
-		// stand up, just in case
-		Stand();
-		DesireStand();
+		CBaseEntity *pEnemy = GetEnemy();
+		bool bFirstContact = false;
+		float flTimeSinceFirstSeen = gpGlobals->curtime - GetEnemies()->FirstTimeSeen( pEnemy );
 
-		if( GetEnemy() && !(GetEnemy()->GetFlags() & FL_NOTARGET) )
+		if( flTimeSinceFirstSeen < 3.0f )
+			bFirstContact = true;
+
+		if ( pEnemy )
 		{
-			// Charge in and break the enemy's cover!
+			/*if ( HasCondition( COND_SEE_ENEMY ) && HasCondition( COND_CAN_RANGE_ATTACK1 ) )
+			{
+				DevWarning( 1, "COND_CAN_RANGE_ATTACK1!!\n" );
+				return SCHED_RANGE_ATTACK1;
+			}*/
+
+			/*if( HasCondition( COND_SEE_ENEMY ) && CanGrenadeEnemy() )
+			{
+				return SCHED_RANGE_ATTACK2;
+			}*/
+			
+			DevWarning( 1, "COND_NEW_ENEMY then SCHED_ESTABLISH_LINE_OF_FIRE!!\n" );
 			return SCHED_ESTABLISH_LINE_OF_FIRE;
 		}
-
-		// If I'm a long, long way away, establish a LOF anyway. Once I get there I'll
-		// start respecting the squad slots again.
-		float flDistSq = GetEnemy()->WorldSpaceCenter().DistToSqr( WorldSpaceCenter() );
-		if ( flDistSq > Square(3000) )
-			return SCHED_ESTABLISH_LINE_OF_FIRE;
-
-		// Otherwise tuck in.
-		//Remember( bits_MEMORY_INCOVER );
-		//return SCHED_ALIENCONTROLLER_WAIT_IN_COVER;
 	}
 
 	return SCHED_NONE;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1336,6 +1365,7 @@ int CNPC_AlienController::SelectSchedule(void)
 	{
 	case NPC_STATE_IDLE:
 		{
+			DevWarning( 1, "case NPC_STATE_IDLE!!\n" );
 			//
 			// If we're flying, just find somewhere to fly to.
 			//
@@ -1344,11 +1374,19 @@ int CNPC_AlienController::SelectSchedule(void)
 				DevWarning( 1, "SCHED_ALIENCONTROLLER_IDLE_FLOAT!!\n" );
 				return SCHED_ALIENCONTROLLER_IDLE_FLOAT;
 			}
+			break;
 		}
 	case NPC_STATE_ALERT:
+		{
 			DevWarning( 1, "NPC_STATE_ALERT!!\n" );
+			int nSched_ = SelectCombatSchedule();
+			if ( nSched_ != SCHED_NONE )
+				return nSched_;
+			break;
+		}
 	case NPC_STATE_COMBAT:
 		{
+			DevWarning( 1, "case NPC_STATE_COMBAT!!\n" );
 			int nSched = SelectCombatSchedule();
 			if ( nSched != SCHED_NONE )
 				return nSched;
@@ -1379,7 +1417,7 @@ int CNPC_AlienController::SelectSchedule(void)
 		}*/
 	}
 	
-	DevWarning( 1, "BaseClass::SelectSchedule!!\n" );
+	DevWarning( 1, "BaseClass::SelectSchedule - state %d!!\n", m_NPCState );
 	return BaseClass::SelectSchedule();
 }
 
@@ -1881,6 +1919,7 @@ SCHED_ALIENCONTROLLER_RANGE_ATTACK1,
 "		COND_GIVE_WAY"
 "		COND_HEAR_DANGER"
 "		COND_HEAR_MOVE_AWAY"
+"		COND_ENEMY_OCCLUDED"
 //"		COND_COMBINE_NO_FIRE"
 ""
 // Enemy_Occluded				Don't interrupt on this.  Means
@@ -1896,9 +1935,10 @@ SCHED_ALIENCONTROLLER_ESTABLISH_LINE_OF_FIRE,
 "	Tasks "
 "		TASK_SET_FAIL_SCHEDULE			SCHEDULE:SCHED_FAIL_ESTABLISH_LINE_OF_FIRE"
 "		TASK_SET_TOLERANCE_DISTANCE		48"
-"		TASK_GET_PATH_TO_ENEMY_LKP_LOS	0"
+//"		TASK_GET_PATH_TO_ENEMY_LKP_LOS	0"
 //"		TASK_SPEAK_SENTENCE				1"
-"		TASK_RUN_PATH					0"
+//"		TASK_RUN_PATH					0"
+"		TASK_ALIENCONTROLLER_CHASE_ENEMY_CONTINUOUSLY					150" // target distance
 "		TASK_WAIT_FOR_MOVEMENT			0"
 "		TASK_SET_SCHEDULE				SCHEDULE:SCHED_COMBAT_FACE"
 "	"
